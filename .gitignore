@@ -1,0 +1,9 @@
+/.angular/cache
+.settings/
+/e2e
+.project
+.classpath
+/node_modules
+/dist
+/.vscode/launch.json
+.history/
