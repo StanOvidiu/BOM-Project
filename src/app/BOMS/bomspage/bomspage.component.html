@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Continental Catalogue</title>
+    <link rel="stylesheet" href="bomspage.component.css">
+</head>
+<body>
+    <main>
+        <h1>BOMS List</h1>
+        <div class="catalogue">
+            <!-- Loop through listOfBoms to display each BOM -->
+            <div *ngFor="let bom of listOfBoms; let i = index" class="catalogue-item" (click)="redirectToBomDetails(i)">
+                <h2>{{bom.project_name}}</h2>
+                <!-- Show the "Selected" label if bom.selected is true -->
+                <span *ngIf="bom.selected" class="selected-label">Currently Active</span>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

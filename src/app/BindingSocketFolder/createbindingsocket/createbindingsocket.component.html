@@ -1,0 +1,62 @@
+<div class="login-box">
+  <h2>Create Binding Socket</h2>
+    <form>
+      <div class="user-box">
+        <input type="text" id= "pname" name="pname" required="">
+        <label>Producer name</label>
+      </div>
+      <div class="user-box">
+        <input type="text" id= "code" name="code" required="">
+        <label>Product code</label>
+      </div>
+      <div class="user-box">
+        <input type="number" id= "qty" name="qty" required="">
+        <label>QTY/pack</label>
+      </div>
+      <div class="user-box">
+        <input type="number" id= "price" name="price" step="0.01" required="">
+        <label>PRICE/pcs</label>
+      </div>
+      <button (click)="addProducer()">Add Producer</button>
+    <form>
+    <br>
+    <form>
+      <div class="user-box">
+        <input type="file" id="image" name="image" required="" (change)="onImageChange($event)">
+      </div>
+      <div class="user-box">
+        <input type="text" id="name" name="name" required="">
+        <label>Name</label>
+      </div>
+      <div class="user-box">
+        <input type="number" id="size" name="size" required="">
+        <label>Size</label>
+      </div>
+      <div class="user-box">
+        <input type="text" id="color" name="color" required="">
+        <label>Color</label>
+      </div>
+      <div class="user-box">
+        <input type="text" id="mpn" name="mpn" required="">
+        <label>MPN</label>
+      </div>
+      <div class="user-box">
+        <input type="text" id="details" name="details" required="">
+        <label>Details</label>
+      </div>
+      <div class="user-box">
+        <input type="text" id="project" name="project" required="">
+        <label>Project</label>
+      </div>
+      <div class="user-box">
+        <input type="number" id="stock" name="stock" required="">
+        <label>Stock</label>
+      </div>
+      <div class="user-box">
+        <input type="text" id="subcategory" name="subcategory" required="">
+        <label>Category</label>
+      </div>
+      <button (click)="create()">Create Binding Socket</button>
+    </form>
+    
+

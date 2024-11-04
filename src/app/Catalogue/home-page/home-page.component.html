@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Continental Catalogue</title>
+    <link rel="stylesheet" href="home-page.component.css">
+</head>
+<body>
+    <main>
+        <h1>Catalogue</h1>
+        <div class="catalogue">
+            <div *ngFor="let category of listOfCategories; let i = index" [ngStyle]="{
+                'background-image': 'url(data:image/png;base64,' + category.image + ')'}" class="catalogue-item" (click)="redirectToSubcategories(i)">{{category.name}}</div>
+        </div>
+    </main>
+</body>
+</html>
+

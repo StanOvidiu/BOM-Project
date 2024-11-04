@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM Details</title>
+    <link rel="stylesheet" href="bomdetails.component.css">
+</head>
+<body>
+    <main>
+        <h1>BOM Details</h1>
+        <div class="bom-details">
+            <!-- BOM Details Section -->
+            <div class="bom-section">
+                <div class="bom-item">
+                    <strong>Project Name:</strong>
+                    <span>{{bom.project_name}}</span>
+                </div>
+                <div class="bom-item">
+                    <strong>BOM ID:</strong>
+                    <span>{{bom.bom_id}}</span>
+                </div>
+                <div class="bom-item">
+                    <strong>Project DS:</strong>
+                    <span>{{bom.project_ds}}</span>
+                </div>
+                <div class="bom-item">
+                    <strong>Project DG:</strong>
+                    <span>{{bom.project_dg}}</span>
+                </div>
+                <div class="bom-item">
+                    <strong>Equipment Name:</strong>
+                    <span>{{bom.equipment_name}}</span>
+                </div>
+                <div class="bom-item">
+                    <strong>Variant:</strong>
+                    <span>{{bom.variant}}</span>
+                </div>
+                <div class="bom-item">
+                    <strong>Sets:</strong>
+                    <span>{{bom.sets}}</span>
+                </div>
+                <div class="bom-item">
+                    <strong>Created By:</strong>
+                    <span>{{bom.created_by}}</span>
+                </div>
+                <div class="bom-item">
+                    <strong>Created Date:</strong>
+                    <span>{{bom.created_date}}</span>
+                </div>
+                <div class="bom-item">
+                    <strong>Selected:</strong>
+                    <span>{{bom.selected ? 'Yes' : 'No'}}</span>
+                </div>
+            </div>
+
+            <!-- Components Section -->
+            <div class="components-section">
+                <h2>Components</h2>
+                <div class="component-list">
+                    <div *ngFor="let component of bom.components" class="component-item">
+                        <strong>Component Name:</strong>
+                        <span>{{component.componentId}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
+

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Continental Catalogue</title>
+    <link rel="stylesheet" href="subcategories.component.css">
+</head>
+<body>
+    <main>
+        <h1>{{category.name}}</h1>
+        <div class="catalogue" >
+            <div *ngFor="let subcategory of category.subcategories; let i = index" class="catalogue-item" (click)="redirectToItems(i)">{{subcategory}}</div>
+        </div>
+    </main>
+</body>
+</html>
+
