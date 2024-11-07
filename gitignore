@@ -1,0 +1,7 @@
+.history/*
+.vscode/*
+*.code-workspace
+/node_modules
+/dist
+/bin
+/obj
