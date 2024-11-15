@@ -7,11 +7,11 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class BomService {
 
-  private bomSource = new BehaviorSubject<Bom | null>(null);
-  currentBom = this.bomSource.asObservable();
+  private bomIdSource = new BehaviorSubject<string | null>(null);
+  currentBomID = this.bomIdSource.asObservable();
 
-  changeBindingSocket(bindingsocket: Bom){
-    this.bomSource.next(bindingsocket);
+  changeBindingSocket(bomId: string){
+    this.bomIdSource.next(bomId);
   }
 
   constructor() { }
