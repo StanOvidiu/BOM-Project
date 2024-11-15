@@ -388,7 +388,7 @@ h2{
   .Addbutton span {
     transform: translateX(6px);
     transition: .5s;
-    font-size: 11px;
+    font-size: 13px;
   }
   
   .Addbutton svg {

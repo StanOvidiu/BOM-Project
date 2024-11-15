@@ -74,6 +74,8 @@ export class BindingsocketComponent {
         if (key == "_id" || key == "subcategory" || key=="pricemin"){
           return;
         }
+        if(key == "producer")
+          key = "supplier";
         keysSet.add(key.toUpperCase());
       });
     });

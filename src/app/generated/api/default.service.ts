@@ -421,12 +421,23 @@ export class DefaultService {
     }
 
     public addBOM(socketID: string): Observable<string>{
-        console.log(socketID)
         return this.httpClient.post<string>(`${this.configuration.basePath}/Bindingsockets/AddBOM/${socketID}`,{});
     }
 
     public getAllBoms(): Observable<Bom[]>{
         return this.httpClient.get<Bom[]>(`${this.configuration.basePath}/BOM/GetAllBoms`);
+    }
+
+    public selectAsDefault(bomId: string): Observable<string>{
+        return this.httpClient.post<string>(`${this.configuration.basePath}/Bom/SelectAsDefault/${bomId}`, {});
+    }
+
+    public getBomById(bomId: string):Observable<Bom>{
+        return this.httpClient.get<Bom>(`${this.configuration.basePath}/Bom/GetBomById/${bomId}`, {});
+    }
+
+    public getComponents(bomId: string):Observable<BindingSocket[]>{
+        return this.httpClient.get<BindingSocket[]>(`${this.configuration.basePath}/Bom/GetComponents/${bomId}`, {});
     }
 
     /**

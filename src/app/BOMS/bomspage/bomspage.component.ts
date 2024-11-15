@@ -28,7 +28,7 @@ export class BomspageComponent {
   }
 
   redirectToBomDetails(index: number){
-    this.bomService.changeBindingSocket(this.listOfBoms[index]);
+    this.bomService.changeBindingSocket(this.listOfBoms[index]._id ?? '');
     this.router.navigate(['/bomDetails']);
   }
 }

@@ -50,20 +50,35 @@
                 </div>
                 <div class="bom-item">
                     <strong>Selected:</strong>
-                    <span>{{bom.selected ? 'Yes' : 'No'}}</span>
+                    <span *ngIf="bom.selected; else showSelectButton">Yes</span>
+                    <ng-template #showSelectButton>
+                        <button (click)="selectAsDefault()">Select as default</button>
+                    </ng-template>
                 </div>
             </div>
 
             <!-- Components Section -->
             <div class="components-section">
                 <h2>Components</h2>
-                <div class="component-list">
-                    <div *ngFor="let component of bom.components" class="component-item">
-                        <strong>Component Name:</strong>
-                        <span>{{component.componentId}}</span>
+                <div class="component-table">
+                    <div class="table-header">
+                        <div>Image</div>
+                        <div>Component Name</div>
+                        <div>Quantity</div>
+                        <div>Supplier</div>
+                        <div>Choose Supplier</div>
+                    </div>
+                    <div *ngFor="let component of componentList" class="table-row">
+                        <!-- <div><img [src]="'data:image/jpeg;base64,' + component.image" alt="Base64 Image" class="scaled-image"/></div> -->
+                        <div><img [src]="'data:image/jpeg;base64,' + component.image" alt="Base64 Image" class="scaled-image"/></div>
+                        <div>{{component.name}}</div>
+                        <div>Quantity input</div>
+                        <div>Selected supplier</div>
+                        <div>Button for pop up box to choose supplier</div>
                     </div>
                 </div>
             </div>
+            
         </div>
     </main>
 </body>
