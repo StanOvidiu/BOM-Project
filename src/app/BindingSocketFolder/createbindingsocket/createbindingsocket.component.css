@@ -1,4 +1,4 @@
-html {
+/* html {
     height: 100%;
   }
   
@@ -68,4 +68,122 @@ html {
     transition: .5s;
     margin-top: 40px;
     letter-spacing: 4px
-  }
+  } */
+
+
+  /* Asigură-te că html și body ocupă întreaga înălțime și sunt aliniate central */
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0; 
+  padding: 20px; 
+  box-sizing: border-box;
+}
+
+.login-box {
+  position: relative;
+    left: 38%;
+    margin-top: 20px;
+    width: 341px;
+    padding: 21px;
+    background: white;
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px #ddd;
+    border-radius: 10px;
+    border: 7px solid #ff9900;
+}
+
+.login-box h2 {
+  margin-bottom: 20px;
+  color: black;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  
+}
+
+.login-box .user-box {
+  position: relative;
+  width: 90%;
+  padding: 5px;
+  margin-bottom: 1px;
+}
+
+
+.login-box .user-box input,
+.login-box .user-box select, 
+.login-box .user-box textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  color: black;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  text-transform: uppercase;
+}
+
+.login-box .user-box label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 14px;
+  color: black;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+.login-box .user-box input:focus ~ label,
+.login-box .user-box input:valid ~ label {
+  top: -7px;
+  color: #ff9900;
+  font-size: 12px;
+}
+
+.login-box form .btn-group {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; 
+  margin-top: 20px;
+}
+
+.login-box form .btn-group button,
+.login-box form .btn-group input[type="file"] {
+  padding: 8px;
+  font-size: 14px;
+  color: #000;
+  background-color: #ddd;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-box form .btn-group button:hover,
+.login-box form .btn-group input[type="file"]:hover {
+  background-color: #bbb;
+}
+
+.login-box form .submit-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  color: #000;
+  background-color: #ddd;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 20px;
+  transition: 0.3s;
+}
+
+.login-box form .submit-button:hover {
+  background-color: #bbb;
+}

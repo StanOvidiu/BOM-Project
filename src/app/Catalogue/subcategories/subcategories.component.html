@@ -10,7 +10,16 @@
     <main>
         <h1>{{category.name}}</h1>
         <div class="catalogue" >
-            <div *ngFor="let subcategory of category.subcategories; let i = index" class="catalogue-item" (click)="redirectToItems(i)">{{subcategory}}</div>
+            <div *ngFor="let subcategory of category.subcategories; let i = index" 
+                class="card" 
+                (click)="redirectToItems(i)">
+                <div class="card-image" [ngStyle]="{
+                    'background-image': 'url(data:image/png;base64,' + category.image + ')'
+                 }">
+                </div>
+                <div class="category"></div>
+                <div>{{subcategory}}</div>
+            </div>
         </div>
     </main>
 </body>
