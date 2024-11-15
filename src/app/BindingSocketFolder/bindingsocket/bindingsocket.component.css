@@ -69,8 +69,8 @@ h2{
 
 .fl-table th:nth-child(3), 
 .fl-table td:nth-child(3), 
-.fl-table th:nth-child(8), 
-.fl-table td:nth-child(8)  {
+.fl-table th:nth-child(9), 
+.fl-table td:nth-child(9)  {
     width: 12px; 
     min-width: 12px;
 }
@@ -189,6 +189,11 @@ h2{
         left: 980px;
         width: 185px;
     }
+}
+
+.supplierDetails
+{
+  width: 93px !important;
 }
 
 .button-65 {
@@ -375,7 +380,7 @@ h2{
     /* padding: 20px; */
     overflow: hidden;
     position: relative;
-    left: 13px;
+    left: 16px;
     top: -61px;
     border: none
   }

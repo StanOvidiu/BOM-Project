@@ -40,13 +40,13 @@
             <td>{{bindingsocket.name}}</td>
             <td>{{bindingsocket.size}}</td>
             <td>{{bindingsocket.color}}</td>
+            <td><button class="button-65 supplierDetails" type="button" (click)="openDialog(i, $event)">Supplier Details</button></td>
             <!-- <td>{{bindingsocket.producer}}</td> -->
             <td>{{bindingsocket.mpn}}</td>
             <!-- <td>{{bindingsocket.pricemin}}</td> -->
             <td>{{bindingsocket.details}}</td>
             <td>{{bindingsocket.project}}</td>
             <td>{{bindingsocket.stock}}</td>
-            <td><button (click)="openDialog()">Details</button></td>
             <td>
                 <button (click)="editBindingSocket(i)" class="editBtn">
                     <svg height="1em" viewBox="0 0 512 512">
@@ -105,8 +105,6 @@
                     0,0,2.39,2.38h10" class="cls-1"></path> 
                     <polyline points="7.21 5.32 22.48 5.32 22.48 7.23 20.57 13.91 9.11 13.91" class="cls-1">                     
                     </polyline> </g> </g></svg>
-
-
                 </button>
             </td>
         </tr>

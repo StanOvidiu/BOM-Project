@@ -422,7 +422,7 @@ export class DefaultService {
 
     public addBOM(socketID: string): Observable<string>{
         console.log(socketID)
-        return this.httpClient.post<string>(`${this.configuration.basePath}/Bindingsockets/AddBOM`,{socketID});
+        return this.httpClient.post<string>(`${this.configuration.basePath}/Bindingsockets/AddBOM/${socketID}`,{});
     }
 
     public getAllBoms(): Observable<Bom[]>{

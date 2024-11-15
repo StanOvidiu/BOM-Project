@@ -9,7 +9,7 @@ import { CategoriesService } from '../../categories.service';
 import { Categories } from '../../generated/model/categories';
 import { SubcategoriesService } from '../../subcategories.service';
 import { Subcategories } from '../../generated/model/subcategories';
-import { PopUpComponent } from '../../pop-up/pop-up.component';
+import { PopUpComponent } from '../pop-up/pop-up.component';
 import { MatDialog } from '@angular/material/dialog';
 
 
@@ -56,10 +56,6 @@ export class BindingsocketComponent {
     })
   }
 
-  openDialog(){
-    this.dialogRef.open(PopUpComponent);
-  }
-
   filterList() {
     this.service.getBindingSocketsForSearch(this.searchTerm,this.subcategory).subscribe(data =>{
       this.listOfBindingSockets = data;
@@ -75,7 +71,7 @@ export class BindingsocketComponent {
 
     this.listOfBindingSockets.forEach(bindingSocket => {
       Object.keys(bindingSocket).forEach(key => {
-        if (key == "_id" || key == "producer" || key=="pricemin"){
+        if (key == "_id" || key == "subcategory" || key=="pricemin"){
           return;
         }
         keysSet.add(key.toUpperCase());
@@ -102,6 +98,11 @@ export class BindingsocketComponent {
     );
   }
 
+  openDialog(index: number, event: Event){
+    this.bindingSocketService.changeBindingSocket(this.listOfBindingSockets[index]);
+    this.dialogRef.open(PopUpComponent);
+  }
+
   editBindingSocket(index: number) {
     this.bindingSocketService.changeBindingSocket(this.listOfBindingSockets[index]);
     this.router.navigate(['/editBindingSocket']);
@@ -117,11 +118,8 @@ export class BindingsocketComponent {
         console.log('Binding Socket added to BOM.');
       },
       (error: any) => {
-        console.error('Error deleting Binding Socket:', error);
+        console.error('Error adding to BOM:', error);
       }
     );
   }
-  
-
-  
 }

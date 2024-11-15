@@ -1,0 +1,31 @@
+<div class="center">
+    
+</div>
+<div class="popUpContainer" (click)="closeOnOverlayClick($event)">
+    <div class="popup-content" (click)="$event.stopPropagation()">
+        <h2>{{bindingsocket.name?.toUpperCase()}}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let producer of producersList">
+                    <tr *ngIf="producer.quantity && producer.price">
+                        <td>{{producer.name}}</td>
+                        <td>{{producer.quantity}}</td>
+                        <td>{{producer.price}}</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+        <div class="controls">
+            <button type="button" (click)="closeDialog()">Închide</button>
+        </div>
+    </div>
+</div>
+
+ 
