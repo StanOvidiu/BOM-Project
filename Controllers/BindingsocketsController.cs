@@ -117,9 +117,10 @@ namespace WebApplication1.Controllers
                 if (bom != null)
                 {
                     Component component = new Component();
-                    component.componentId = socketID;
-                    component.add_date = DateTime.Now.ToString("yyyy-MM-dd");
-                    bom.components.Add(component);
+
+                    var result = await GetBindingSocket(socketID);
+
+                    bom.componentIDs.Add(socketID);
 
                     await _bomCollection.ReplaceOneAsync(filter, bom);
                     return Ok();
