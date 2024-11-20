@@ -34,7 +34,6 @@ namespace WebApplication1.Controllers
         // Method to fetch all Categories from the database
         private async Task<List<Categories>> GetListOfAllCategoriesFromDB()
         {
-            var x = await _categoriesCollection.Find(_ => true).ToListAsync();
             return await _categoriesCollection.Find(_ => true).ToListAsync();
         }
         public IActionResult Index()

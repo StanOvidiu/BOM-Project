@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace WebApplication1.Models
@@ -17,16 +18,23 @@ namespace WebApplication1.Models
         public string _id { get; set; }
 
         // Name property
+        [BsonElement("name")]
+        [JsonPropertyName("name")]
         public string name { get; set; }
 
+        [BsonElement("image")]
+        [JsonPropertyName("image")]
+        public string image { get; set; }
+
         // List of subcategories
-        [Required]
-        public List<string> subcategories { get; set; } = new List<string>();
+        [BsonElement("subcategories")]
+        [JsonPropertyName("subcategories")]
+        public List<Subcategory> subcategories { get; set; } = new List<Subcategory>();
 
         // Constructor
         public Categories()
         {
-            subcategories = new List<string>();
+            subcategories = new List<Subcategory>();
         }
 
         // ToString override
