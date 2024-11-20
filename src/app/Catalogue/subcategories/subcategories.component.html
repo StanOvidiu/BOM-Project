@@ -14,11 +14,11 @@
                 class="card" 
                 (click)="redirectToItems(i)">
                 <div class="card-image" [ngStyle]="{
-                    'background-image': 'url(data:image/png;base64,' + category.image + ')'
+                    'background-image': 'url(data:image/png;base64,' + subcategory.image + ')'
                  }">
                 </div>
                 <div class="category"></div>
-                <div>{{subcategory}}</div>
+                <div>{{subcategory.name}}</div>
             </div>
         </div>
     </main>

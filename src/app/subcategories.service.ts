@@ -8,10 +8,10 @@ import { Subcategories } from './generated/model/subcategories';
 })
 export class SubcategoriesService {
 
-  private subcategorySource = new BehaviorSubject<string | null>(null);
+  private subcategorySource = new BehaviorSubject<Subcategories | null>(null);
   currentSubcategory = this.subcategorySource.asObservable();
 
-  changeSubcategory(subcategory: string) {
+  changeSubcategory(subcategory: Subcategories) {
     this.subcategorySource.next(subcategory);
   }
   

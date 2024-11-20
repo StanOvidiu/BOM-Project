@@ -21,10 +21,44 @@ h2{
 /* Table Styles */
 
 .scaled-image {
-    width: 69px;
-    height: 50px;
-    object-fit: contain; /* Ensures the image covers the specified dimensions and maintains aspect ratio */
+  width: 100px; /* Dimensiunea implicită a imaginii */
+  height: auto;
+  transition: transform 0.3s ease; /* Tranziția pentru o animație lină */
 }
+
+.image-container {
+  position: relative; /* Păstrează poziționarea relativă pentru container */
+  display: inline-block; /* Menține dimensiunea containerului */
+}
+
+.thumbnail-image {
+  width: 100px; /* Dimensiunea implicită mică a imaginii */
+  height: auto;
+  cursor: pointer; /* Arată că este un element activ */
+}
+
+.hover-image {
+  display: none; /* Ascunde imaginea mărită inițial */
+  position: absolute;
+  top: -150px; /* Poziționează imaginea mai sus */
+  left: 120%; /* Poziționează imaginea în dreapta */
+  z-index: 100;
+  background-color: white; /* Poți adăuga un fundal dacă dorești */
+  padding: 5px;
+  border: 1px solid #ddd; /* O margine subțire pentru aspect */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Efect de umbră */
+}
+
+.hover-image img {
+  width: 300px; /* Dimensiunea imaginii mărite */
+  height: auto;
+}
+
+.image-container:hover .hover-image {
+  display: block; /* Afișează imaginea mărită pe hover */
+}
+
+
 
 .fl-table {
   border-radius: 5px;
@@ -386,7 +420,7 @@ h2{
   }
   
   .Addbutton span {
-    transform: translateX(6px);
+    transform: translateX(8px);
     transition: .5s;
     font-size: 13px;
   }

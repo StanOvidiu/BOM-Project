@@ -4,5 +4,5 @@ export interface Categories{
     _id?: any,
     image?: string,
     name?: string;
-    subcategories: Array<string>
+    subcategories: Array<Subcategories>
 }

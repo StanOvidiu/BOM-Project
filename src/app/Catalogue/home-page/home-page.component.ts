@@ -24,11 +24,16 @@ export class HomePageComponent {
   }
 
   ngOnInit() {
-    this.service.getCategories().subscribe(data => {
-      this.listOfCategories = data;
-    })
-
-  }
+    this.service.getCategories().subscribe(
+        data => {
+            this.listOfCategories = data;
+            console.log(data);
+        },
+        error => {
+            console.error('Error fetching categories:', error);
+        }
+    );
+}
 
   redirectToSubcategories(index: number) {
     this.categoriesService.changeCategory(this.listOfCategories[index]);

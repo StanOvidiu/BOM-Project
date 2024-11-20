@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Categories } from '../../generated/model/categories';
+import { Subcategories } from '../../generated/model/subcategories';
 import { Router } from '@angular/router';
 import { CategoriesService } from '../../categories.service';
 import { DefaultService } from '../../generated/api/default.service';
@@ -16,18 +17,19 @@ import { SubcategoriesService } from '../../subcategories.service';
 export class SubcategoriesComponent {
 
 
-  imagePath:string = 'assets/PngItem_411992.png'
-
+  // Subcategories
   category:Categories = {subcategories: []}
-
+ 
   constructor(private router: Router, private categriesService: CategoriesService, private sService: SubcategoriesService, private service: DefaultService){
-
+ 
+  
   }
 
   ngOnInit(): void {
     this.categriesService.currentCategory.subscribe(data =>{
       if(data){
         this.category = data;
+        console.log(data);
         sessionStorage.setItem('category', JSON.stringify(data));
       }
       else{
@@ -41,11 +43,11 @@ export class SubcategoriesComponent {
 
   redirectToItems(index: number) {
     const selectedSubcategory = this.category.subcategories[index];
-
-    this.sService.changeSubcategory(selectedSubcategory);
-
-    sessionStorage.setItem('subcategory',selectedSubcategory);
-
+ 
+    this.sService.changeSubcategory(selectedSubcategory); //aici
+ 
+    sessionStorage.setItem('subcategory',selectedSubcategory.name);
+ 
     this.router.navigate(['/bindingSocket']);
     }
 }

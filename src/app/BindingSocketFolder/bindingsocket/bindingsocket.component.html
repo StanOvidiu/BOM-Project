@@ -36,7 +36,22 @@
         </thead>
         <tbody>
         <tr *ngFor="let bindingsocket of listOfBindingSockets; let i = index">
-            <td><img [src]="'data:image/jpeg;base64,' + bindingsocket.image" alt="Base64 Image" class="scaled-image"/></td>
+            <td>
+                <div class="image-container">
+                  <img 
+                    [src]="'data:image/jpeg;base64,' + bindingsocket.image" 
+                    alt="Base64 Image" 
+                    class="thumbnail-image"
+                  />
+                  <div class="hover-image">
+                    <img 
+                      [src]="'data:image/jpeg;base64,' + bindingsocket.image" 
+                      alt="Base64 Hover Image"
+                    />
+                  </div>
+                </div>
+              </td>
+              
             <td>{{bindingsocket.name}}</td>
             <td>{{bindingsocket.size}}</td>
             <td>{{bindingsocket.color}}</td>
@@ -95,7 +110,7 @@
                     </svg>
                 </button>
                 <button (click)="addToBom(bindingsocket._id)" class="Addbutton">    
-                    <span>Add</span>             
+                    <span>Add to BOM</span>             
                     <svg fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <g stroke-width="0" id="SVGRepo_bgCarrier"></g><g stroke-linejoin="round" stroke-linecap="round" 
                     id="SVGRepo_tracerCarrier"></g><g id="SVGRepo_iconCarrier"> <defs>  </defs> <g id="cart"> 

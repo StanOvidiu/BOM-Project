@@ -43,9 +43,9 @@ export class BindingsocketComponent {
 
     this.sService.currentSubcategory.subscribe(data => {
       if (data) {
-        this.subcategory = data;
+        this.subcategory = data.name;
         // Store the new subcategory in sessionStorage whenever it changes
-        sessionStorage.setItem('subcategory', this.subcategory);
+        sessionStorage.setItem('subcategory', data.name);
       }
     });
 

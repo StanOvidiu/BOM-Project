@@ -117,14 +117,14 @@ html, body {
 .login-box .user-box select, 
 .login-box .user-box textarea {
   width: 100%;
-  padding: 10px;
-  font-size: 14px;
+  padding-top: 14px;
+  font-size: 10px;
   color: black;
   background: transparent;
   border: none;
   border-bottom: 1px solid black;
   outline: none;
-  text-transform: uppercase;
+  text-transform: capitalize; 
 }
 
 .login-box .user-box label {
@@ -140,7 +140,7 @@ html, body {
 
 .login-box .user-box input:focus ~ label,
 .login-box .user-box input:valid ~ label {
-  top: -7px;
+  top: -9px;
   color: #ff9900;
   font-size: 12px;
 }

@@ -6,47 +6,55 @@
     <title>BOM Details</title>
     <link rel="stylesheet" href="bomdetails.component.css">
 </head>
-<body>
+<body aria-hidden="false">
     <main>
-        <h1>BOM Details</h1>
+        <h1 style="display: flex; justify-content: space-between; align-items: center;">
+            BOM Details
+            <div class="button-container">
+                <button (click)="isEditing = !isEditing" class="edit-button">
+                    {{ isEditing ? 'Cancel' : 'Edit' }}
+                </button>
+                <button class="save-button">Save</button>
+            </div>
+        </h1>
         <div class="bom-details">
             <!-- BOM Details Section -->
             <div class="bom-section">
                 <div class="bom-item">
                     <strong>Project Name:</strong>
-                    <span>{{bom.project_name}}</span>
+                    <span [attr.contenteditable]="isEditing" [class.editable]="isEditing">{{ bom.project_name }}</span>
                 </div>
                 <div class="bom-item">
                     <strong>BOM ID:</strong>
-                    <span>{{bom.bom_id}}</span>
+                    <span [attr.contenteditable]="isEditing" [class.editable]="isEditing">{{ bom.bom_id }}</span>
                 </div>
                 <div class="bom-item">
                     <strong>Project DS:</strong>
-                    <span>{{bom.project_ds}}</span>
+                    <span [attr.contenteditable]="isEditing" [class.editable]="isEditing">{{ bom.project_ds }}</span>
                 </div>
                 <div class="bom-item">
                     <strong>Project DG:</strong>
-                    <span>{{bom.project_dg}}</span>
+                    <span [attr.contenteditable]="isEditing" [class.editable]="isEditing">{{ bom.project_dg }}</span>
                 </div>
                 <div class="bom-item">
                     <strong>Equipment Name:</strong>
-                    <span>{{bom.equipment_name}}</span>
+                    <span [attr.contenteditable]="isEditing" [class.editable]="isEditing">{{ bom.equipment_name }}</span>
                 </div>
                 <div class="bom-item">
                     <strong>Variant:</strong>
-                    <span>{{bom.variant}}</span>
+                    <span [attr.contenteditable]="isEditing" [class.editable]="isEditing">{{ bom.variant }}</span>
                 </div>
                 <div class="bom-item">
-                    <strong>Sets:</strong>
-                    <span>{{bom.sets}}</span>
+                    <strong>No. of sets:</strong>
+                    <input type="text" class="editable-sets" value="{{bom.sets}}" />
                 </div>
                 <div class="bom-item">
                     <strong>Created By:</strong>
-                    <span>{{bom.created_by}}</span>
+                    <span [attr.contenteditable]="isEditing" [class.editable]="isEditing">{{ bom.created_by }}</span>
                 </div>
                 <div class="bom-item">
                     <strong>Created Date:</strong>
-                    <span>{{bom.created_date}}</span>
+                    <span [attr.contenteditable]="isEditing" [class.editable]="isEditing">{{ bom.created_date }}</span>
                 </div>
                 <div class="bom-item">
                     <strong>Selected:</strong>
@@ -56,8 +64,6 @@
                     </ng-template>
                 </div>
             </div>
-
-            <!-- Components Section -->
             <div class="components-section">
                 <h2>Components</h2>
                 <div class="component-table">
@@ -68,17 +74,16 @@
                         <div>Supplier</div>
                         <div>Choose Supplier</div>
                     </div>
-                    <div *ngFor="let component of componentList" class="table-row">
+                    <div *ngFor="let component of componentList; let i = index" class="table-row">
                         <!-- <div><img [src]="'data:image/jpeg;base64,' + component.image" alt="Base64 Image" class="scaled-image"/></div> -->
                         <div><img [src]="'data:image/jpeg;base64,' + component.image" alt="Base64 Image" class="scaled-image"/></div>
                         <div>{{component.name}}</div>
-                        <div>Quantity input</div>
-                        <div>Selected supplier</div>
-                        <div>Button for pop up box to choose supplier</div>
+                        <input type="text" class="editable-sets" value="0" />
+                        <div>Selected Supplier</div>
+                        <button class="save-button" (click)="openDialog(i,$event)">Save</button>
                     </div>
                 </div>
             </div>
-            
         </div>
     </main>
 </body>

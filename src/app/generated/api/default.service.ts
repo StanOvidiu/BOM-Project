@@ -439,6 +439,7 @@ export class DefaultService {
     public getComponents(bomId: string):Observable<BindingSocket[]>{
         return this.httpClient.get<BindingSocket[]>(`${this.configuration.basePath}/Bom/GetComponents/${bomId}`, {});
     }
+    
 
     /**
      * Update a BindingSocket
