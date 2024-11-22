@@ -100,6 +100,7 @@ namespace WebApplication1.Controllers
                 existingBindingSocket.stock = updatedBindingSocket.stock;
                 existingBindingSocket.producer = updatedBindingSocket.producer;
                 existingBindingSocket.image = updatedBindingSocket.image;
+                existingBindingSocket.selectedsupplier = updatedBindingSocket.selectedsupplier;
 
                 await _bindingSocketsCollection.ReplaceOneAsync(filter, existingBindingSocket);
                 return Ok();
@@ -116,11 +117,21 @@ namespace WebApplication1.Controllers
                 var bom = _bomCollection.Find(filter).FirstOrDefault();
                 if (bom != null)
                 {
-                    Component component = new Component();
+                    ActionResult<BindingSocket> result = await GetBindingSocket(socketID);
+                    BindingSocket socket = new BindingSocket();
 
-                    var result = await GetBindingSocket(socketID);
+                    if(result.Result is OkObjectResult okResult)
+                    {
+                        socket = (BindingSocket)okResult.Value;
+                    }
 
-                    bom.componentIDs.Add(socketID);
+                    BOMComponent component = new BOMComponent();
+                    component.componentId = socket._id;
+                    component.image = socket.image;
+                    component.name = socket.name;
+                    component.suppliers = socket.producer;
+
+                    bom.components.Add(component);
 
                     await _bomCollection.ReplaceOneAsync(filter, bom);
                     return Ok();

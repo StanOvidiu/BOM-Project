@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication1.Models;
+using System.Text.Json;
 
 namespace WebApplication1.Controllers
 {
@@ -42,28 +43,36 @@ namespace WebApplication1.Controllers
         }
 
         [HttpGet("{bomId}")]
-        public async Task<ActionResult<BindingSocket[]>> GetComponents(string bomId)
+        public async Task<ActionResult<List<BOMComponent>>> GetBomSuppliersById(string bomId)
         {
-            var componentsList = new List<BindingSocket>();
-
             var filter = Builders<BOM>.Filter.Eq("_id", bomId);
-
             var bom = await _bomCollection.Find(filter).FirstOrDefaultAsync();
-
-            if(bom != null)
-            {
-                foreach(var id in bom.componentIDs)
-                {
-                    var filter2 = Builders<BindingSocket>.Filter.Eq("_id", ObjectId.Parse(id));
-
-                    var socket = await _bindingSocketCollection.Find(filter2).FirstOrDefaultAsync();
-
-                    componentsList.Add(socket);
-                }
-            }
-
-            return Ok(componentsList);
+            return Ok(bom.components);
         }
+
+        //[HttpGet("{bomId}")]
+        //public async Task<ActionResult<BindingSocket[]>> GetComponents(string bomId)
+        //{
+        //    var componentsList = new List<BindingSocket>();
+
+        //    var filter = Builders<BOM>.Filter.Eq("_id", bomId);
+
+        //    var bom = await _bomCollection.Find(filter).FirstOrDefaultAsync();
+
+        //    if(bom != null)
+        //    {
+        //        foreach(var id in bom.componentIDs)
+        //        {
+        //            var filter2 = Builders<BindingSocket>.Filter.Eq("_id", ObjectId.Parse(id));
+
+        //            var socket = await _bindingSocketCollection.Find(filter2).FirstOrDefaultAsync();
+
+        //            componentsList.Add(socket);
+        //        }
+        //    }
+
+        //    return Ok(componentsList);
+        //}
 
         [HttpPost("{bomId}")]
         public async Task<ActionResult> SelectAsDefault(string bomId)
@@ -89,6 +98,25 @@ namespace WebApplication1.Controllers
                 return Ok();
             }
             return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> SetSelectedSupplierToBOMProduct([FromQuery] string productId, [FromQuery] string selectedSupplier, [FromQuery] string bomId)
+        {
+            // Filter to find the BOM document containing the specific component
+            var filter = Builders<BOM>.Filter.Eq("_id", bomId);
+            var bom = _bomCollection.Find(filter).FirstOrDefault();
+
+            foreach(var component in bom.components)
+            {
+                if(productId == component.componentId)
+                {
+                    component.selectedSupplier = selectedSupplier;
+                }
+            }
+
+            await _bomCollection.ReplaceOneAsync(filter, bom);
+            return Ok();
         }
 
         public IActionResult Index()

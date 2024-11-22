@@ -34,6 +34,6 @@ namespace WebApplication1.Models
 
         public string created_date { get; set; }
 
-        public List<string> componentIDs { get; set; }
+        public List<BOMComponent> components { get; set; } = new List<BOMComponent>();
     }
 }

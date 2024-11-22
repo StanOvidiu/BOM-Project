@@ -70,6 +70,10 @@ namespace WebApplication1.Models
         [JsonPropertyName("subcategory")]
         public string subcategory { get; set; }
 
+        [BsonElement("selectedsupplier")]
+        [JsonPropertyName("selectedsupplier")]
+        public string selectedsupplier { get; set; }
+
         // Fluent method to set the image
         public BindingSocket WithImage(string image)
         {
