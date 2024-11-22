@@ -28,6 +28,7 @@ import { Categories } from '../model/categories';
 import { tick } from '@angular/core/testing';
 import { Subcategories } from '../model/subcategories';
 import { Bom } from '../model/bom';
+import { Bomcomponent } from '../model/bomcomponent';
 
 
 
@@ -436,8 +437,16 @@ export class DefaultService {
         return this.httpClient.get<Bom>(`${this.configuration.basePath}/Bom/GetBomById/${bomId}`, {});
     }
 
+    public getBomSuppliersById(bomId: string):Observable<Array<Bomcomponent>>{
+        return this.httpClient.get<Array<Bomcomponent>>(`${this.configuration.basePath}/Bom/GetBomSuppliersById/${bomId}`, {});
+    }
+
     public getComponents(bomId: string):Observable<BindingSocket[]>{
         return this.httpClient.get<BindingSocket[]>(`${this.configuration.basePath}/Bom/GetComponents/${bomId}`, {});
+    }
+
+    public setSelectedSupplier(bomId: string, productId: string, selectedSupplier: string | undefined):Observable<string>{
+        return this.httpClient.post<string>(`${this.configuration.basePath}/Bom/SetSelectedSupplierToBOMProduct?productId=${productId}&selectedSupplier=${selectedSupplier}&bomId=${bomId}`, {})
     }
     
 

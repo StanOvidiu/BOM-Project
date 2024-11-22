@@ -74,12 +74,12 @@
                         <div>Supplier</div>
                         <div>Choose Supplier</div>
                     </div>
-                    <div *ngFor="let component of componentList; let i = index" class="table-row">
+                    <div *ngFor="let component of bom.components; let i = index" class="table-row">
                         <!-- <div><img [src]="'data:image/jpeg;base64,' + component.image" alt="Base64 Image" class="scaled-image"/></div> -->
                         <div><img [src]="'data:image/jpeg;base64,' + component.image" alt="Base64 Image" class="scaled-image"/></div>
                         <div>{{component.name}}</div>
-                        <input type="text" class="editable-sets" value="0" />
-                        <div>Selected Supplier</div>
+                        <input type="text" class="editable-sets" value="{{component.quantity}}" />
+                        <div>{{component.selectedSupplier}}</div>
                         <button class="save-button" (click)="openDialog(i,$event)">Save</button>
                     </div>
                 </div>

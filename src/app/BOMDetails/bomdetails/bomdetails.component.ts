@@ -20,7 +20,11 @@ import { BOMPopUpComponent } from '../../bom-pop-up/bom-pop-up.component';
 export class BomdetailsComponent {
 
   public bom:Bom = {
-    componentIDs: []
+    components: [
+      {
+        suppliers: []
+      }
+    ]
   };
 
   public componentList: BindingSocket[] = [];
@@ -46,16 +50,18 @@ export class BomdetailsComponent {
 
     this.service.getBomById(this.bom._id).subscribe(data => {
       this.bom = data;
+      console.log(data);
     });
 
-    this.service.getComponents(this.bom._id).subscribe(data => {
-      this.componentList = data;
-      console.log("da");
-    })
+    this.service.getBomSuppliersById(this.bom._id).subscribe(data => {
+      this.bom.components = data;
+      console.log(data);
+    });
   }
 
   openDialog(index: number, event: Event){
-    this.bindingSocketService.changeBindingSocket(this.componentList[index]);
+    this.bomService.changeProduct(this.bom.components[index]);
+    this.bomService.changeBindingSocket(this.bom._id);
     this.dialogRef.open(BOMPopUpComponent);
   }
 

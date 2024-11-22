@@ -13,5 +13,5 @@ export interface Bom{
     sets?: number,
     created_by?: string,
     created_date?: string,
-    componentIDs: Array<string>
+    components: Array<Bomcomponent>
 }
