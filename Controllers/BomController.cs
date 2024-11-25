@@ -119,6 +119,24 @@ namespace WebApplication1.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        public async Task<ActionResult> SetQuantityToBOMProduct([FromQuery] string productId, [FromQuery] string bomId, [FromQuery] int quantity)
+        {
+            var filter = Builders<BOM>.Filter.Eq("_id", bomId);
+            var bom = _bomCollection.Find(filter).FirstOrDefault();
+
+            foreach (var component in bom.components)
+            {
+                if (productId == component.componentId)
+                {
+                    component.quantity = quantity;
+                }
+            }
+
+            await _bomCollection.ReplaceOneAsync(filter, bom);
+            return Ok();
+        }
+
         public IActionResult Index()
         {
             return View();
