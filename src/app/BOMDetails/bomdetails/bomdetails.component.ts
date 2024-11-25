@@ -65,6 +65,13 @@ export class BomdetailsComponent {
     this.dialogRef.open(BOMPopUpComponent);
   }
 
+  onTextChange(event: Event, index: number){
+    const input = event.target as HTMLInputElement;
+    const newQuantity = Number(input.value);
+    console.log('Quantity updated:', newQuantity);
+    this.service.setQuantity(this.bom.components[index].componentId, this.bom._id, newQuantity).subscribe();
+  }
+
   toggleEdit() {
     this.isEditing = !this.isEditing; // Toggle edit mode
   }

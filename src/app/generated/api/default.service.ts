@@ -448,6 +448,10 @@ export class DefaultService {
     public setSelectedSupplier(bomId: string, productId: string, selectedSupplier: string | undefined):Observable<string>{
         return this.httpClient.post<string>(`${this.configuration.basePath}/Bom/SetSelectedSupplierToBOMProduct?productId=${productId}&selectedSupplier=${selectedSupplier}&bomId=${bomId}`, {})
     }
+
+    public setQuantity(productId: string | undefined, bomId: string, quantity: number):Observable<number>{
+        return this.httpClient.post<number>(`${this.configuration.basePath}/Bom/SetQuantityToBOMProduct?productId=${productId}&bomId=${bomId}&quantity=${quantity}`,{})
+    }
     
 
     /**
