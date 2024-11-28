@@ -29,6 +29,7 @@ import { tick } from '@angular/core/testing';
 import { Subcategories } from '../model/subcategories';
 import { Bom } from '../model/bom';
 import { Bomcomponent } from '../model/bomcomponent';
+import { Variant } from '../model/variant';
 
 
 
@@ -452,7 +453,18 @@ export class DefaultService {
     public setQuantity(productId: string | undefined, bomId: string, quantity: number):Observable<number>{
         return this.httpClient.post<number>(`${this.configuration.basePath}/Bom/SetQuantityToBOMProduct?productId=${productId}&bomId=${bomId}&quantity=${quantity}`,{})
     }
+
+    public setVariantQuantity(variantId: string | undefined, componentId: string | undefined, quantity: number):Observable<number>{
+        return this.httpClient.post<number>(`${this.configuration.basePath}/Variant/SetQuantityToVariantProduct?variantId=${variantId}&componentId=${componentId}&quantity=${quantity}`,{})
+    }
     
+    public createVariant(bomId: string, variantName : string):Observable<string>{
+        return this.httpClient.post<string>(`${this.configuration.basePath}/Bom/CreateVariant?bomId=${bomId}&variantName=${variantName}`,{})
+    }
+
+    public getVariantsForSpecificBOM(bomId: string):Observable<Variant[]>{
+        return this.httpClient.get<Variant[]>(`${this.configuration.basePath}/Variant/GetVariantsForSpecificBOM?bomId=${bomId}`,{})
+    }
 
     /**
      * Update a BindingSocket

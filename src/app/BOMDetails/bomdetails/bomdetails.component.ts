@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { PopUpComponent } from '../../BindingSocketFolder/pop-up/pop-up.component';
 import { MatDialog } from '@angular/material/dialog';
 import { BOMPopUpComponent } from '../../bom-pop-up/bom-pop-up.component';
+import { Variant } from '../../generated/model/variant';
 
 @Component({
   selector: 'app-bomdetails',
@@ -27,6 +28,7 @@ export class BomdetailsComponent {
     ]
   };
 
+  public variants: Variant[] = [];
   public componentList: BindingSocket[] = [];
   public isEditing = false;
 
@@ -50,13 +52,17 @@ export class BomdetailsComponent {
 
     this.service.getBomById(this.bom._id).subscribe(data => {
       this.bom = data;
-      console.log(data);
+      console.log(data._id);
     });
 
     this.service.getBomSuppliersById(this.bom._id).subscribe(data => {
       this.bom.components = data;
       console.log(data);
     });
+
+    this.service.getVariantsForSpecificBOM(this.bom._id).subscribe(data => {
+      this.variants = data;
+    })
   }
 
   openDialog(index: number, event: Event){
@@ -72,8 +78,20 @@ export class BomdetailsComponent {
     this.service.setQuantity(this.bom.components[index].componentId, this.bom._id, newQuantity).subscribe();
   }
 
+  onVariantTextChange(event: Event, index: number, variant: Variant){
+    const input = event.target as HTMLInputElement;
+    const newQuantity = Number(input.value);
+    console.log('Quantity updated:', newQuantity);
+    this.service.setVariantQuantity(variant._id, variant.components[index].componentId, newQuantity).subscribe();
+  }
+
   toggleEdit() {
     this.isEditing = !this.isEditing; // Toggle edit mode
+  }
+
+  createVariant(){
+    const name = (document.getElementById('variantName') as HTMLInputElement).value;
+    this.service.createVariant(this.bom._id, name).subscribe();
   }
 
   selectAsDefault(){
