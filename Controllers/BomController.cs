@@ -19,18 +19,19 @@ namespace WebApplication1.Controllers
     {
         private readonly IMongoCollection<BOM> _bomCollection;
         private readonly IMongoCollection<BindingSocket> _bindingSocketCollection;
+        private readonly IMongoCollection<Variant> _variantCollection;
 
         public BomController(IMongoDatabase database)
         {
             _bomCollection = database.GetCollection<BOM>("BOMS");
             _bindingSocketCollection = database.GetCollection<BindingSocket>("bindingSocket");
+            _variantCollection = database.GetCollection<Variant>("variants");
         }
 
         [HttpGet]
         public async Task<ActionResult<List<BOM>>> GetAllBoms()
         {
             var boms = await _bomCollection.Find(_ => true).ToListAsync();
-            var x = 1;
             return Ok(boms);
         }
 
@@ -134,6 +135,31 @@ namespace WebApplication1.Controllers
             }
 
             await _bomCollection.ReplaceOneAsync(filter, bom);
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateVariant([FromQuery] string bomId, [FromQuery] string variantName)
+        {
+            var filter = Builders<BOM>.Filter.Eq("_id", bomId);
+            var bom = _bomCollection.Find(filter).FirstOrDefault();
+
+            var variant = new Variant()
+            {
+                name = variantName,
+                parent_id = bomId
+            };
+
+            var variantComponent = new VariantComponent();
+            foreach(var component in bom.components)
+            {
+                variantComponent.componentId = component.componentId;
+                variantComponent.quantity = 0;
+                variant.components.Add(variantComponent);
+            }
+
+            await _variantCollection.InsertOneAsync(variant);
+
             return Ok();
         }
 
