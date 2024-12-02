@@ -137,6 +137,34 @@ namespace WebApplication1.Controllers
             return Ok();
         }
 
+
+        [HttpPut("{bomId}")]
+        public async Task<ActionResult> UpdateBOM(string bomId, [FromBody] BOM updatedBom)
+        {
+            var filter = Builders<BOM>.Filter.Eq("_id", ObjectId.Parse(bomId));
+            var alreadyExistBom = await _bomCollection.Find(filter).FirstOrDefaultAsync();
+
+
+            if (alreadyExistBom != null)
+            {
+                alreadyExistBom.project_name = updatedBom.project_name;
+                alreadyExistBom.bom_id = updatedBom.bom_id;
+                alreadyExistBom.project_ds = updatedBom.project_ds;
+                alreadyExistBom.project_dg = updatedBom.project_dg;
+                alreadyExistBom.equipment_name = updatedBom.equipment_name;
+                alreadyExistBom.variant = updatedBom.variant;
+                alreadyExistBom.sets = updatedBom.sets;
+                alreadyExistBom.created_by = updatedBom.created_by;
+                alreadyExistBom.created_date = updatedBom.created_date;
+                alreadyExistBom.selected = updatedBom.selected;
+                alreadyExistBom.components = updatedBom.components;
+
+                await _bomCollection.ReplaceOneAsync(filter, alreadyExistBom);
+                return Ok();
+            }
+            return NotFound();
+        }
+
         public IActionResult Index()
         {
             return View();
