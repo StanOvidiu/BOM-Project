@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication1.Models
 {
+    [BsonIgnoreExtraElements]
     public class Subcategory
     {
         [BsonElement("name")]

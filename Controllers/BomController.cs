@@ -75,6 +75,33 @@ namespace WebApplication1.Controllers
         //    return Ok(componentsList);
         //}
 
+
+        [HttpPut("{bomId}")]
+        public async Task<IActionResult> UpdateBOM(string bomId, [FromBody] BOM updatedBom)
+        {
+            var filter = Builders<BOM>.Filter.Eq("_id", ObjectId.Parse(bomId));
+            var existingBom = await _bomCollection.Find(filter).FirstOrDefaultAsync();
+            if (existingBom != null)
+            {
+                existingBom.selected = updatedBom.selected;
+                existingBom.bom_id = updatedBom.bom_id;
+                existingBom.project_name = updatedBom.project_name;
+                existingBom.project_ds = updatedBom.project_ds;
+                existingBom.project_dg = updatedBom.project_dg;
+                existingBom.equipment_name = updatedBom.equipment_name;
+                existingBom.variant = updatedBom.variant;
+                existingBom.sets = updatedBom.sets;
+                existingBom.created_by = updatedBom.created_by;
+                existingBom.created_date = updatedBom.created_date;
+                existingBom.components = updatedBom.components;
+               
+
+                await _bomCollection.ReplaceOneAsync(filter, existingBom);
+                return Ok();
+            }
+            return NotFound();
+        }
+
         [HttpPost("{bomId}")]
         public async Task<ActionResult> SelectAsDefault(string bomId)
         {
@@ -119,6 +146,8 @@ namespace WebApplication1.Controllers
             await _bomCollection.ReplaceOneAsync(filter, bom);
             return Ok();
         }
+
+
 
         [HttpPost]
         public async Task<ActionResult> SetQuantityToBOMProduct([FromQuery] string productId, [FromQuery] string bomId, [FromQuery] int quantity)
