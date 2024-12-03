@@ -19,11 +19,13 @@ namespace WebApplication1.Controllers
     {
         private readonly IMongoCollection<BindingSocket> _bindingSocketsCollection;
         private readonly IMongoCollection<BOM> _bomCollection;
+        private readonly IMongoCollection<Variant> _variantCollection;
 
         public BindingsocketsController(IMongoDatabase database)
         {
             _bindingSocketsCollection = database.GetCollection<BindingSocket>("bindingSocket");
             _bomCollection = database.GetCollection<BOM>("BOMS");
+            _variantCollection = database.GetCollection<Variant>("variants");
         }
 
         [HttpPost]
@@ -125,15 +127,20 @@ namespace WebApplication1.Controllers
                         socket = (BindingSocket)okResult.Value;
                     }
 
-                    BOMComponent component = new BOMComponent();
-                    component.componentId = socket._id;
-                    component.image = socket.image;
-                    component.name = socket.name;
-                    component.suppliers = socket.producer;
+                    BOMComponent component = new BOMComponent
+                    {
+                        componentId = socket._id,
+                        image = socket.image,
+                        name = socket.name,
+                        suppliers = socket.producer
+                    };
 
                     bom.components.Add(component);
 
                     await _bomCollection.ReplaceOneAsync(filter, bom);
+
+                    await AddComponentToVariants(bom, socket);
+
                     return Ok();
                 }
             } catch(Exception e)
@@ -142,6 +149,23 @@ namespace WebApplication1.Controllers
             }
             return NotFound();
         }
+
+        [NonAction]
+        public async Task AddComponentToVariants(BOM bom, BindingSocket socket)
+        {
+            var filter = Builders<Variant>.Filter.Eq("parent_id", bom._id);
+
+            VariantComponent component = new VariantComponent
+            {
+                componentId = socket._id,
+                quantity = 0
+            };
+
+            var update = Builders<Variant>.Update.AddToSet("components", component);
+
+            await _variantCollection.UpdateManyAsync(filter, update);
+        }
+
         public IActionResult Index()
         {
             return View();
