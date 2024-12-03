@@ -90,6 +90,29 @@
                         <input type="text" class="editable-sets" value="0" />
                         <div>Selected Suppliers</div>
                         <button class="save-button" (click)="openDialog(i,$event)">Save</button>
+                <div>
+                    <button class="save-button" (click)="createVariant()">Create New Variant</button>
+                    <input type="text" name="variant-name" id="variantName">
+                </div>
+                <div class="component-table-container">
+                    <div class="component-table">
+                        <div class="table-header">
+                            <div>Image</div>
+                            <div>Component Name</div>
+                            <div>Quantity</div>
+                            <div>Supplier</div>
+                            <div>Choose Supplier</div>
+                            <div *ngFor="let variant of variants">{{variant.name}}</div>
+                        </div>
+                        <div *ngFor="let component of bom.components; let i = index" class="table-row">
+                            <!-- <div><img [src]="'data:image/jpeg;base64,' + component.image" alt="Base64 Image" class="scaled-image"/></div> -->
+                            <div><img [src]="'data:image/jpeg;base64,' + component.image" alt="Base64 Image" class="scaled-image"/></div>
+                            <div>{{component.name}}</div>
+                            <input (input)="onTextChange($event,i)" type="number" class="editable-sets" value="{{component.quantity}}" />
+                            <div>{{component.selectedSupplier}}</div>
+                            <button class="save-button" (click)="openDialog(i,$event)">Save</button>
+                            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -97,4 +120,3 @@
     </main>
 </body>
 </html>
-

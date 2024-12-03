@@ -28,6 +28,8 @@ import { Categories } from '../model/categories';
 import { tick } from '@angular/core/testing';
 import { Subcategories } from '../model/subcategories';
 import { Bom } from '../model/bom';
+import { Bomcomponent } from '../model/bomcomponent';
+import { Variant } from '../model/variant';
 
 
 
@@ -737,10 +739,33 @@ export class DefaultService {
         return this.httpClient.get<Bom>(`${this.configuration.basePath}/Bom/GetBomById/${bomId}`, {});
     }
 
+    public getBomSuppliersById(bomId: string):Observable<Array<Bomcomponent>>{
+        return this.httpClient.get<Array<Bomcomponent>>(`${this.configuration.basePath}/Bom/GetBomSuppliersById/${bomId}`, {});
+    }
+
     public getComponents(bomId: string):Observable<BindingSocket[]>{
         return this.httpClient.get<BindingSocket[]>(`${this.configuration.basePath}/Bom/GetComponents/${bomId}`, {});
     }
+
+    public setSelectedSupplier(bomId: string, productId: string, selectedSupplier: string | undefined):Observable<string>{
+        return this.httpClient.post<string>(`${this.configuration.basePath}/Bom/SetSelectedSupplierToBOMProduct?productId=${productId}&selectedSupplier=${selectedSupplier}&bomId=${bomId}`, {})
+    }
+
+    public setQuantity(productId: string | undefined, bomId: string, quantity: number):Observable<number>{
+        return this.httpClient.post<number>(`${this.configuration.basePath}/Bom/SetQuantityToBOMProduct?productId=${productId}&bomId=${bomId}&quantity=${quantity}`,{})
+    }
+
+    public setVariantQuantity(variantId: string | undefined, componentId: string | undefined, quantity: number):Observable<number>{
+        return this.httpClient.post<number>(`${this.configuration.basePath}/Variant/SetQuantityToVariantProduct?variantId=${variantId}&componentId=${componentId}&quantity=${quantity}`,{})
+    }
     
+    public createVariant(bomId: string, variantName : string):Observable<string>{
+        return this.httpClient.post<string>(`${this.configuration.basePath}/Bom/CreateVariant?bomId=${bomId}&variantName=${variantName}`,{})
+    }
+
+    public getVariantsForSpecificBOM(bomId: string):Observable<Variant[]>{
+        return this.httpClient.get<Variant[]>(`${this.configuration.basePath}/Variant/GetVariantsForSpecificBOM?bomId=${bomId}`,{})
+    }
 
     /**
      * Update a BindingSocket

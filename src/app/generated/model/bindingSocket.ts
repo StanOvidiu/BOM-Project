@@ -28,5 +28,6 @@ export interface BindingSocket {
     project?: string;
     stock?: number;
     subcategory?: string;
+    selectedsupplier?: string;
 }
 

@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { PopUpComponent } from '../../BindingSocketFolder/pop-up/pop-up.component';
 import { MatDialog } from '@angular/material/dialog';
 import { BOMPopUpComponent } from '../../bom-pop-up/bom-pop-up.component';
+import { Variant } from '../../generated/model/variant';
 
 @Component({
   selector: 'app-bomdetails',
@@ -21,9 +22,14 @@ import { BOMPopUpComponent } from '../../bom-pop-up/bom-pop-up.component';
 export class BomdetailsComponent {
 
   public bom:Bom = {
-    componentIDs: []
+    components: [
+      {
+        suppliers: []
+      }
+    ]
   };
 
+  public variants: Variant[] = [];
   public componentList: BindingSocket[] = [];
   public isEditing = false;
 
@@ -47,39 +53,46 @@ export class BomdetailsComponent {
 
     this.service.getBomById(this.bom._id).subscribe(data => {
       this.bom = data;
+      console.log(data._id);
     });
 
-    this.service.getComponents(this.bom._id).subscribe(data => {
-      this.componentList = data;
-      console.log("da");
+    this.service.getBomSuppliersById(this.bom._id).subscribe(data => {
+      this.bom.components = data;
+      console.log(data);
+    });
+
+    this.service.getVariantsForSpecificBOM(this.bom._id).subscribe(data => {
+      this.variants = data;
     })
   }
 
   openDialog(index: number, event: Event){
-    this.bindingSocketService.changeBindingSocket(this.componentList[index]);
+    this.bomService.changeProduct(this.bom.components[index]);
+    this.bomService.changeBindingSocket(this.bom._id);
     this.dialogRef.open(BOMPopUpComponent);
   }
 
+  onTextChange(event: Event, index: number){
+    const input = event.target as HTMLInputElement;
+    const newQuantity = Number(input.value);
+    console.log('Quantity updated:', newQuantity);
+    this.service.setQuantity(this.bom.components[index].componentId, this.bom._id, newQuantity).subscribe();
+  }
+
+  onVariantTextChange(event: Event, index: number, variant: Variant){
+    const input = event.target as HTMLInputElement;
+    const newQuantity = Number(input.value);
+    console.log('Quantity updated:', newQuantity);
+    this.service.setVariantQuantity(variant._id, variant.components[index].componentId, newQuantity).subscribe();
+  }
 
   toggleEdit() {
     this.isEditing = !this.isEditing; // Toggle edit mode
   }
 
-  saveBOM() {
-    if (!this.bom._id) {
-      console.error("BOM ID is not defined!");
-      return;
-    }
-
-    this.service.updateBOM(this.bom._id, this.bom).subscribe({
-      next: (response) => {
-        console.log("BOM updated successfully:", response);
-        this.isEditing = false; // Exit edit mode
-      },
-      error: (err) => {
-        console.error("Error updating BOM:", err);
-      },
-    });
+  createVariant(){
+    const name = (document.getElementById('variantName') as HTMLInputElement).value;
+    this.service.createVariant(this.bom._id, name).subscribe();
   }
 
   selectAsDefault(){

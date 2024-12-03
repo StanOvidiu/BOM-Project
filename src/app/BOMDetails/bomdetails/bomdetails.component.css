@@ -157,14 +157,23 @@ h2 {
 }
 
 /* Components Section */
+.component-table-container {
+    overflow-x: auto; /* Permite scroll-ul orizontal */
+    max-width: 100%; /* Se ajustează la dimensiunea paginii */
+    border-radius: 10px; /* Colțuri rotunjite */
+    margin-bottom: 20px;
+    background-color: #555; /* Fundal gri */
+}
+
 .component-table {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* Adjusted to 7 columns */
+    grid-auto-flow: row; /* Menține rândurile unul sub altul */
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Ajustare automată */
     gap: 10px;
+    min-width: 1000px; /* Dimensiune minimă pentru a asigura scroll-ul */
     background-color: #555;
     border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Umbră pentru efect vizual */
 }
 
 .table-header {
@@ -200,12 +209,4 @@ h2 {
     .component-table {
         width: 100%; /* Use full width on larger screens */
     }
-}
-
-
-.scaled-image {
-    width: 60px;
-    height: 40px;
-    object-fit: contain;
-    border-radius: 5px;
 }

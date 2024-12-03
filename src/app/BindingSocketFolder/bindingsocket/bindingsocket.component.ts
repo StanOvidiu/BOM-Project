@@ -71,7 +71,7 @@ export class BindingsocketComponent {
 
     this.listOfBindingSockets.forEach(bindingSocket => {
       Object.keys(bindingSocket).forEach(key => {
-        if (key == "_id" || key == "subcategory" || key=="pricemin"){
+        if (key == "_id" || key == "subcategory" || key=="pricemin" || key == "selectedsupplier"){
           return;
         }
         if(key == "producer")

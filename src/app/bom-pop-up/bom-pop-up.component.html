@@ -1,9 +1,9 @@
 <div class="center">
     
 </div>
-<div class="popUpContainer" (click)="closeOnOverlayClick($event)">
+<div class="popUpContainer" (click)="closeOnOverlayClick($event)" aria-hidden="false">
     <div class="popup-content" (click)="$event.stopPropagation()">
-        <h2>{{bindingsocket.name?.toUpperCase()}}</h2>
+        <h2>{{activeProduct.name?.toUpperCase()}}</h2>
         <table>
             <thead>
                 <tr>
@@ -13,11 +13,11 @@
                 </tr>
             </thead>
             <tbody>
-                <ng-container *ngFor="let producer of producersList; let i = index">
-                    <tr *ngIf="producer.quantity && producer.price" (click)="selectSupplier(i, $event)">
-                        <td>{{producer.name}}</td>
-                        <td>{{producer.quantity}}</td>
-                        <td>{{producer.price}} €</td>
+                <ng-container *ngFor="let supplier of activeProduct.suppliers; let i = index">
+                    <tr *ngIf="supplier.quantity && supplier.price" (click)="selectSupplier(i, $event)">
+                        <td>{{supplier.name}}</td>
+                        <td>{{supplier.quantity}}</td>
+                        <td>{{supplier.price}} €</td>
                     </tr>
                 </ng-container>
             </tbody>

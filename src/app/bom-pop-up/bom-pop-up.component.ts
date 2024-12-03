@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { BindingSocketServiceService } from '../binding-socket-service.service';
 import { CommonModule } from '@angular/common';
+import { BomService } from '../bom.service';
+import { Bomcomponent } from '../generated/model/bomcomponent';
 
 @Component({
   selector: 'app-bom-pop-up',
@@ -14,20 +16,28 @@ import { CommonModule } from '@angular/common';
 })
 export class BOMPopUpComponent {
 
+  currentBomId: string|undefined = "";
   producersList:Array<BindingSocketProducerInner> = [];
-  bindingsocket: BindingSocket = {};
   selectedSupplier: string|undefined = '';
+  activeProduct:Bomcomponent = {
+    suppliers: []
+  };
 
-  constructor(public dialogRef:MatDialog, private router: Router, private bindingSocketService: BindingSocketServiceService, private service: DefaultService){}
+  constructor(public dialogRef:MatDialog, private router: Router, private bindingSocketService: BindingSocketServiceService, private bomService: BomService, private service: DefaultService){}
 
   ngOnInit(): void {
-    this.bindingSocketService.currentBindingSocket.subscribe(data =>{
+    this.bomService.currentBomProduct.subscribe(data =>{
       if(data){
-        this.bindingsocket = data;
-        this.producersList = this.bindingsocket.producer ? this.bindingsocket.producer : [];
+        this.activeProduct = data;
+        this.producersList = this.activeProduct.suppliers ? this.activeProduct.suppliers : [];
       }
     });
-    console.log(this.producersList);
+    this.bomService.currentBomID.subscribe(data =>{
+      if(data){
+        this.currentBomId = data;
+        this.producersList = this.activeProduct.suppliers ? this.activeProduct.suppliers : [];
+      }
+    });
   }
 
   closeDialog()
@@ -40,10 +50,13 @@ export class BOMPopUpComponent {
   }
 
   selectSupplier(index: number, event : Event){
+
     if(this.producersList[index].name != null){
       this.selectedSupplier = this.producersList[index].name;
-      sessionStorage.setItem('selectedSupplier',this.selectedSupplier ? this.selectedSupplier : "");
-      console.log(this.selectedSupplier)
     }
+
+    this.service.setSelectedSupplier(this.currentBomId?this.currentBomId:"", this.activeProduct.componentId?this.activeProduct.componentId:"", this.selectedSupplier).subscribe();
+    this.dialogRef.closeAll();
+    window.location.reload();
   }
 }
