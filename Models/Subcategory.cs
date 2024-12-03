@@ -16,8 +16,5 @@ namespace WebApplication1.Models
         [BsonElement("image")]
         [JsonPropertyName("image")]
         public string? image { get; set; } = string.Empty;
-
-        [JsonIgnore] //nu va fi serializat in DB
-        public string? OldName { get; set; }
     }
 }
