@@ -1,0 +1,42 @@
+<div class="overlay">
+    <div class="login-box">
+      <h2>Add a Subcategory</h2>
+      <form #subcategoryForm="ngForm" (ngSubmit)="saveSubcategory()">
+        <div class="user-box">
+          <label for="name">Subcategory Name</label>
+          <input
+            type="text"
+            id="name"
+            [(ngModel)]="newSubcategory.name"
+            name="name"
+            required
+          />
+        </div>
+        <div class="user-box">
+          <label for="image">Image for the Subcategory</label>
+          <input
+            type="file"
+            id="image"
+            (change)="onImageChange($event)"
+          />
+        </div>
+        <div class="btn-group">
+          <button
+            type="submit"
+            class="add-button"
+            [disabled]="!subcategoryForm.valid"
+          >
+            Add Subcategory
+          </button>
+          <button
+            type="button"
+            class="cancel-button"
+            (click)="onCancel()"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

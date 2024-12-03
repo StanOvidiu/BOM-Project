@@ -11,10 +11,10 @@
         <h1 style="display: flex; justify-content: space-between; align-items: center;">
             BOM Details
             <div class="button-container">
-                <button (click)="isEditing = !isEditing" class="edit-button">
+                <button (click)="toggleEdit()" class="edit-button">
                     {{ isEditing ? 'Cancel' : 'Edit' }}
                 </button>
-                <button class="save-button">Save</button>
+                <button (click)="saveBOM()" class="save-button">Save</button>
             </div>
         </h1>
         <div class="bom-details">
@@ -22,39 +22,48 @@
             <div class="bom-section">
                 <div class="bom-item">
                     <strong>Project Name:</strong>
-                    <span [attr.contenteditable]="isEditing" [class.editable]="isEditing">{{ bom.project_name }}</span>
+                    <input class="inputFieldsBomDetails" *ngIf="isEditing" [(ngModel)]="bom.project_name" />
+                    <span *ngIf="!isEditing">{{ bom.project_name }}</span>
                 </div>
                 <div class="bom-item">
                     <strong>BOM ID:</strong>
-                    <span [attr.contenteditable]="isEditing" [class.editable]="isEditing">{{ bom.bom_id }}</span>
+                    <input class="inputFieldsBomDetails" *ngIf="isEditing" [(ngModel)]="bom.bom_id" />
+                    <span *ngIf="!isEditing">{{ bom.bom_id }}</span>
                 </div>
                 <div class="bom-item">
                     <strong>Project DS:</strong>
-                    <span [attr.contenteditable]="isEditing" [class.editable]="isEditing">{{ bom.project_ds }}</span>
+                    <input class="inputFieldsBomDetails" *ngIf="isEditing" [(ngModel)]="bom.project_ds" />
+                    <span *ngIf="!isEditing">{{ bom.project_ds }}</span>
                 </div>
                 <div class="bom-item">
                     <strong>Project DG:</strong>
-                    <span [attr.contenteditable]="isEditing" [class.editable]="isEditing">{{ bom.project_dg }}</span>
+                    <input class="inputFieldsBomDetails" *ngIf="isEditing" [(ngModel)]="bom.project_dg" />
+                    <span *ngIf="!isEditing">{{ bom.project_dg }}</span>
                 </div>
                 <div class="bom-item">
                     <strong>Equipment Name:</strong>
-                    <span [attr.contenteditable]="isEditing" [class.editable]="isEditing">{{ bom.equipment_name }}</span>
+                    <input class="inputFieldsBomDetails" *ngIf="isEditing" [(ngModel)]="bom.equipment_name" />
+                    <span *ngIf="!isEditing">{{ bom.equipment_name }}</span>
                 </div>
                 <div class="bom-item">
                     <strong>Variant:</strong>
-                    <span [attr.contenteditable]="isEditing" [class.editable]="isEditing">{{ bom.variant }}</span>
+                    <input class="inputFieldsBomDetails" *ngIf="isEditing" [(ngModel)]="bom.variant" />
+                    <span *ngIf="!isEditing">{{ bom.variant }}</span>
                 </div>
                 <div class="bom-item">
                     <strong>No. of sets:</strong>
-                    <input type="text" class="editable-sets" value="{{bom.sets}}" />
+                    <input class="inputFieldsBomDetails" [(ngModel)]="bom.sets" />
+                    <!-- <span *ngIf="!isEditing">{{ bom.sets }}</span> -->
                 </div>
                 <div class="bom-item">
                     <strong>Created By:</strong>
-                    <span [attr.contenteditable]="isEditing" [class.editable]="isEditing">{{ bom.created_by }}</span>
+                    <input class="inputFieldsBomDetails" *ngIf="isEditing" [(ngModel)]="bom.created_by" />
+                    <span *ngIf="!isEditing">{{ bom.created_by }}</span>
                 </div>
                 <div class="bom-item">
                     <strong>Created Date:</strong>
-                    <span [attr.contenteditable]="isEditing" [class.editable]="isEditing">{{ bom.created_date }}</span>
+                    <input class="inputFieldsBomDetails" *ngIf="isEditing" [(ngModel)]="bom.created_date" />
+                    <span *ngIf="!isEditing">{{ bom.created_date }}</span>
                 </div>
                 <div class="bom-item">
                     <strong>Selected:</strong>
@@ -79,7 +88,7 @@
                         <div><img [src]="'data:image/jpeg;base64,' + component.image" alt="Base64 Image" class="scaled-image"/></div>
                         <div>{{component.name}}</div>
                         <input type="text" class="editable-sets" value="0" />
-                        <div>Selected Supplier</div>
+                        <div>Selected Suppliers</div>
                         <button class="save-button" (click)="openDialog(i,$event)">Save</button>
                     </div>
                 </div>

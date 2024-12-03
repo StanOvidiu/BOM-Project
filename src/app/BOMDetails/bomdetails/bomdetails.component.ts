@@ -5,6 +5,7 @@ import { BomService } from '../../bom.service';
 import { BindingSocketServiceService } from '../../binding-socket-service.service';
 import { BindingSocket, DefaultService } from '../../generated';
 import { Bom } from '../../generated/model/bom';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PopUpComponent } from '../../BindingSocketFolder/pop-up/pop-up.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,7 +14,7 @@ import { BOMPopUpComponent } from '../../bom-pop-up/bom-pop-up.component';
 @Component({
   selector: 'app-bomdetails',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './bomdetails.component.html',
   styleUrl: './bomdetails.component.css'
 })
@@ -59,8 +60,26 @@ export class BomdetailsComponent {
     this.dialogRef.open(BOMPopUpComponent);
   }
 
+
   toggleEdit() {
     this.isEditing = !this.isEditing; // Toggle edit mode
+  }
+
+  saveBOM() {
+    if (!this.bom._id) {
+      console.error("BOM ID is not defined!");
+      return;
+    }
+
+    this.service.updateBOM(this.bom._id, this.bom).subscribe({
+      next: (response) => {
+        console.log("BOM updated successfully:", response);
+        this.isEditing = false; // Exit edit mode
+      },
+      error: (err) => {
+        console.error("Error updating BOM:", err);
+      },
+    });
   }
 
   selectAsDefault(){

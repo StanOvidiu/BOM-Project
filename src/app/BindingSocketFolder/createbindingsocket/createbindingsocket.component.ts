@@ -31,15 +31,15 @@ export class CreatebindingsocketComponent {
   }
 
   create() {
-    const name = (document.getElementById('name') as HTMLInputElement).value;
+    const name = this.capitalizeFirstLetter((document.getElementById('name') as HTMLInputElement).value);
     const size = parseFloat((document.getElementById('size') as HTMLInputElement).value);
-    const color = (document.getElementById('color') as HTMLInputElement).value;
-    const mpn = (document.getElementById('mpn') as HTMLInputElement).value;
+    const color = this.capitalizeFirstLetter((document.getElementById('color') as HTMLInputElement).value);
+    const mpn = this.capitalizeFirstLetter((document.getElementById('mpn') as HTMLInputElement).value);
     const pricemin = this.calculatePriceMin();
-    const details = (document.getElementById('details') as HTMLInputElement).value;
-    const project = (document.getElementById('project') as HTMLInputElement).value;
+    const details = this.capitalizeFirstLetter((document.getElementById('details') as HTMLInputElement).value);
+    const project = this.capitalizeFirstLetter((document.getElementById('project') as HTMLInputElement).value);
     const stock = parseFloat((document.getElementById('stock') as HTMLInputElement).value);
-    const subcategory = (document.getElementById('subcategory') as HTMLInputElement).value;
+    const subcategory = this.capitalizeFirstLetter((document.getElementById('subcategory') as HTMLInputElement).value);
 
     console.log("subcategory:", subcategory)
 
@@ -79,6 +79,11 @@ export class CreatebindingsocketComponent {
 
     this.router.navigate(['/bindingSocket'])
   }
+
+  capitalizeFirstLetter(value: string): string {
+    if (!value) return value;
+    return value.charAt(0).toUpperCase() + value.slice(1);
+}
 
   calculatePriceMin(){
     if (this.producersList.length > 0) {

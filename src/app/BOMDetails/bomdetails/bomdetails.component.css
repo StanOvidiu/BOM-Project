@@ -14,6 +14,19 @@ body {
     padding: 20px;
 }
 
+.inputFieldsBomDetails {
+    background-color: #bebdbd;
+    cursor: text;
+    text-align: center;
+    width: 10%;
+}
+
+.inputFieldsBomDetails:hover,
+.inputFieldsBomDetails:focus {
+    background: transparent;
+}
+
+
 /* Main Container */
 main {
     max-width: 1200px;
@@ -62,8 +75,8 @@ h1 {
     display: flex;
     gap: 10px;
     position: absolute;
-    top: 170px; /* Adjust this value to move the buttons further down */
-    right: 60px; /* Keeps the buttons aligned to the right */
+    top: 170px; 
+    right: 60px; 
 }
 
 .edit-button, .save-button {

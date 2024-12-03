@@ -1,0 +1,20 @@
+<div class="overlay">
+    <div class="login-box">
+      <h2>Update a subcategory</h2>
+      <form>
+        <div class="user-box">
+          <label for="name">Name:</label>
+          <input type="text" id="name" [(ngModel)]="subcategory.name" name="name" required />
+        </div>
+        <div class="user-box">
+          <label for="image">Image:</label>
+          <input type="file" (change)="onImageChange($event)" />
+        </div>
+      </form>
+      <div class="btn-group">
+        <button class="edit-button" (click)="save()">Update</button>
+        <button class="cancel-button" (click)="cancel()">Cancel</button>
+      </div>
+    </div>
+  </div>
+  

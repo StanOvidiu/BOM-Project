@@ -420,6 +420,307 @@ export class DefaultService {
         return this.httpClient.get<Categories[]>(`${this.configuration.basePath}/Categories/GetCategories`);
     }
 
+
+    /**
+     * Create a category
+     * Creates a new instance of a &#x60;category&#x60;.
+     * @param category A new &#x60;category&#x60; to be created.
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createCategory(category: Categories, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Categories>;
+    public createCategory(category: Categories, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Categories>>;
+    public createCategory(category: Categories, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Categories>>;
+    public createCategory(category: Categories, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (category === null || category === undefined) {
+            throw new Error('Required parameter category was null or undefined when calling createCategory.');
+        }
+
+        let localVarHeaders = new HttpHeaders().set('Accept','application/json');
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+        let localVarTransferCache: boolean | undefined = options && options.transferCache;
+        if (localVarTransferCache === undefined) {
+            localVarTransferCache = true;
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/Categories/CreateCategory`;
+        return this.httpClient.request<Categories>('post', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                body: category,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                transferCache: localVarTransferCache,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+
+     /**
+     * Update a Category
+     * Updates an existing &#x60;Category&#x60;.
+     * @param categoryId A unique identifier for a &#x60;Category&#x60;.
+     * @param category Updated &#x60;Category&#x60; information.
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+     public updateCategory(categoryId: string, category: Categories, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<string>;
+     public updateCategory(categoryId: string, category: Categories, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<string>>;
+     public updateCategory(categoryId: string, category: Categories, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<string>>;
+     public updateCategory(categoryId: string, category: Categories, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+         if (categoryId === null || categoryId === undefined) {
+             throw new Error('Required parameter categoryId was null or undefined when calling updateCategory.');
+         }
+         if (category === null || category === undefined) {
+             throw new Error('Required parameter category was null or undefined when calling updateCategory.');
+         }
+ 
+         let localVarHeaders = new HttpHeaders().set('Accept','application/json');
+ 
+         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+         if (localVarHttpHeaderAcceptSelected === undefined) {
+             // to determine the Accept header
+             const httpHeaderAccepts: string[] = [
+                 'application/json'
+             ];
+             localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+         }
+         if (localVarHttpHeaderAcceptSelected !== undefined) {
+             localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+         }
+ 
+         let localVarHttpContext: HttpContext | undefined = options && options.context;
+         if (localVarHttpContext === undefined) {
+             localVarHttpContext = new HttpContext();
+         }
+ 
+         let localVarTransferCache: boolean | undefined = options && options.transferCache;
+         if (localVarTransferCache === undefined) {
+             localVarTransferCache = true;
+         }
+ 
+ 
+         // to determine the Content-Type header
+         const consumes: string[] = [
+             'application/json'
+         ];
+         const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+         if (httpContentTypeSelected !== undefined) {
+             localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+         }
+ 
+         let responseType_: 'text' | 'json' | 'blob' = 'json';
+         if (localVarHttpHeaderAcceptSelected) {
+             if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                 responseType_ = 'text';
+             } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                 responseType_ = 'json';
+             } else {
+                 responseType_ = 'blob';
+             }
+         }
+ 
+         let localVarPath = `/Categories/UpdateCategory/${encodeURIComponent(categoryId)}`; 
+         return this.httpClient.request<string>('put', `${this.configuration.basePath}${localVarPath}`,
+             {
+                 context: localVarHttpContext,
+                 body: category,
+                 responseType: <any>responseType_,
+                 withCredentials: this.configuration.withCredentials,
+                 headers: localVarHeaders,
+                 observe: observe,
+                 transferCache: localVarTransferCache,
+                 reportProgress: reportProgress
+             }
+         );
+     }
+
+
+
+     public addSubcategory(categoryId: string, subcategory: Subcategories, options?: { httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean }): Observable<string> {
+        if (categoryId === null || categoryId === undefined) {
+            throw new Error('Required parameter categoryId was null or undefined when calling addSubcategory.');
+        }
+        if (subcategory === null || subcategory === undefined) {
+            throw new Error('Required parameter subcategory was null or undefined when calling addSubcategory.');
+        }
+    
+        let localVarHeaders = new HttpHeaders().set('Accept', 'application/json');
+    
+        let localVarPath = `/Categories/AddSubcategory/${encodeURIComponent(categoryId)}/add-subcategory`;
+        return this.httpClient.post<string>(`${this.configuration.basePath}${localVarPath}`, subcategory, {
+            headers: localVarHeaders,
+            context: options?.context,
+            observe: 'body',
+            responseType: 'json' as 'json',
+            withCredentials: this.configuration.withCredentials,
+        });
+    }
+
+    public updateSubcategory(
+        categoryId: string,
+        subcategoryName: string,
+        updatedSubcategory: Subcategories,
+        options?: { httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean }
+    ): Observable<string> {
+        if (categoryId === null || categoryId === undefined) {
+            throw new Error('Required parameter categoryId was null or undefined when calling updateSubcategory.');
+        }
+        if (subcategoryName === null || subcategoryName === undefined) {
+            throw new Error('Required parameter subcategoryName was null or undefined when calling updateSubcategory.');
+        }
+        if (updatedSubcategory === null || updatedSubcategory === undefined) {
+            throw new Error('Required parameter updatedSubcategory was null or undefined when calling updateSubcategory.');
+        }
+    
+        let localVarHeaders = new HttpHeaders().set('Accept', 'application/json');
+    
+        let localVarPath = `/Categories/UpdateSubcategory/${encodeURIComponent(categoryId)}/update-subcategory/${encodeURIComponent(subcategoryName)}`;
+        return this.httpClient.put<string>(`${this.configuration.basePath}${localVarPath}`, updatedSubcategory, {
+            headers: localVarHeaders,
+            context: options?.context,
+            observe: 'body',
+            responseType: 'json' as 'json',
+            withCredentials: this.configuration.withCredentials,
+        });
+    }
+
+
+    public deleteSubcategory(
+        categoryId: string,
+        subcategoryName: string,
+        options?: { httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean }
+    ): Observable<string> {
+        if (categoryId === null || categoryId === undefined) {
+            throw new Error('Required parameter categoryId was null or undefined when calling deleteSubcategory.');
+        }
+        if (subcategoryName === null || subcategoryName === undefined) {
+            throw new Error('Required parameter subcategoryName was null or undefined when calling deleteSubcategory.');
+        }
+    
+        let localVarHeaders = new HttpHeaders().set('Accept', 'application/json');
+    
+        let localVarPath = `/Categories/DeleteSubcategory/${encodeURIComponent(categoryId)}/delete-subcategory/${encodeURIComponent(subcategoryName)}`;
+        return this.httpClient.delete<string>(`${this.configuration.basePath}${localVarPath}`, {
+            headers: localVarHeaders,
+            context: options?.context,
+            observe: 'body',
+            responseType: 'json' as 'json',
+            withCredentials: this.configuration.withCredentials,
+        });
+    }
+    
+
+     /**
+     * Delete a category
+     * Deletes an existing &#x60;category&#x60;.
+     * @param categoryId A unique identifier for a &#x60;category&#x60;.
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+     public deleteCategory(categoryId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<string>;
+     public deleteCategory(categoryId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<string>>;
+     public deleteCategory(categoryId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<string>>;
+     public deleteCategory(categoryId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+         if (categoryId === null || categoryId === undefined) {
+             throw new Error('Required parameter categoryId was null or undefined when calling deleteCategory.');
+         }
+ 
+         let localVarHeaders = new HttpHeaders().set('Accept','application/json');
+ 
+         let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+         if (localVarHttpHeaderAcceptSelected === undefined) {
+             // to determine the Accept header
+             const httpHeaderAccepts: string[] = [
+                 'application/json'
+             ];
+             localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+         }
+         if (localVarHttpHeaderAcceptSelected !== undefined) {
+             localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+         }
+ 
+         let localVarHttpContext: HttpContext | undefined = options && options.context;
+         if (localVarHttpContext === undefined) {
+             localVarHttpContext = new HttpContext();
+         }
+ 
+         let localVarTransferCache: boolean | undefined = options && options.transferCache;
+         if (localVarTransferCache === undefined) {
+             localVarTransferCache = true;
+         }
+ 
+ 
+         let responseType_: 'text' | 'json' | 'blob' = 'json';
+         if (localVarHttpHeaderAcceptSelected) {
+             if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                 responseType_ = 'text';
+             } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                 responseType_ = 'json';
+             } else {
+                 responseType_ = 'blob';
+             }
+         }
+ 
+         let localVarPath = `/Categories/DeleteCategory/${encodeURIComponent(categoryId)}`; 
+         return this.httpClient.request<string>('delete', `${this.configuration.basePath}${localVarPath}`,
+             {
+                 context: localVarHttpContext,
+                 responseType: <any>responseType_,
+                 withCredentials: this.configuration.withCredentials,
+                 headers: localVarHeaders,
+                 observe: observe,
+                 transferCache: localVarTransferCache,
+                 reportProgress: reportProgress
+             }
+         );
+     }
+
+     public getCategoryById(categoryId: string):Observable<Categories>{
+        return this.httpClient.get<Categories>(`${this.configuration.basePath}/Categories/GetCategoryById/${categoryId}`, {});
+    }
+
     public addBOM(socketID: string): Observable<string>{
         return this.httpClient.post<string>(`${this.configuration.basePath}/Bindingsockets/AddBOM/${socketID}`,{});
     }
@@ -519,5 +820,66 @@ export class DefaultService {
             }
         );
     }
+
+
+    public updateBOM(bomId: string, updatedBom: Bom, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+        if (bomId === null || bomId === undefined) {
+            throw new Error('Required parameter bomId was null or undefined when calling updateBOM.');
+        }
+        if (updatedBom === null || updatedBom === undefined) {
+            throw new Error('Required parameter updatedBom was null or undefined when calling updateBOM.');
+        }
+    
+        let localVarHeaders = new HttpHeaders().set('Accept', 'application/json');
+    
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            const httpHeaderAccepts: string[] = ['application/json'];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+    
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+    
+        const consumes: string[] = ['application/json'];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+    
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+    
+        const localVarPath = `/Bom/UpdateBOM/${encodeURIComponent(bomId)}`; 
+        return this.httpClient.request<string>('put', `${this.configuration.basePath}${localVarPath}`, {
+            context: localVarHttpContext,
+            body: updatedBom,
+            responseType: <any>responseType_,
+            withCredentials: this.configuration.withCredentials,
+            headers: localVarHeaders,
+            observe: observe,
+            transferCache: options?.transferCache || true,
+            reportProgress: reportProgress,
+        });
+    }
+
+
+
+    
+    
+
 
 }
