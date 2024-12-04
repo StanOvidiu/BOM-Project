@@ -179,9 +179,9 @@ namespace WebApplication1.Controllers
                 parent_id = bomId
             };
 
-            var variantComponent = new VariantComponent();
             foreach(var component in bom.components)
             {
+                var variantComponent = new VariantComponent();
                 variantComponent.componentId = component.componentId;
                 variantComponent.quantity = 0;
                 variant.components.Add(variantComponent);
