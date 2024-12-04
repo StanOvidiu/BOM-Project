@@ -7,6 +7,7 @@ import { SubcategoriesComponent } from './Catalogue/subcategories/subcategories.
 import { LoginComponent } from './LogIn/login/login.component';
 import { BomspageComponent } from './BOMS/bomspage/bomspage.component';
 import { BomdetailsComponent } from './BOMDetails/bomdetails/bomdetails.component';
+import { SuppliersContactComponent } from './suppliers-contact/suppliers-contact.component';
 
 export const routes: Routes = [
     {
@@ -48,5 +49,10 @@ export const routes: Routes = [
         path: 'bomDetails',
         component: BomdetailsComponent,
         title: 'BOM Details'
+    },
+    {
+        path: 'Contact',
+        component: SuppliersContactComponent,
+        title: 'Supplier Contacts'
     }
 ];

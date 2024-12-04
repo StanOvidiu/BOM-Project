@@ -1,0 +1,49 @@
+<div class="table-container">
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th class="table-header">Name</th>
+                <th class="table-header">CEOS Catalog</th>
+                <th class="table-header">Contact Person</th>
+                <th class="table-header">Phone Number</th>
+                <th class="table-header">Mail</th>
+                <th class="table-header">Details</th>
+                <th class="table-header">Web Page</th>
+                <th class="table-header">Ranking + Details</th>
+                <th class="table-header">Projects</th>
+                <th class="table-header">Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let supplier of listOfSuppliers; let i = index" class="table-row">
+                <td class="table-cell">{{ supplier.name }}</td>
+                <td class="table-cell">
+                    <span *ngIf="supplier.ceos_catalog; else notAvailable" class="checkmark">✔</span>
+                    <ng-template #notAvailable>
+                        <span class="cross">✘</span>
+                    </ng-template>
+                </td>
+                <td class="table-cell">{{ supplier.contact_person }}</td>
+                <td class="table-cell">
+                    <div *ngFor="let number of supplier.phone_number" class="table-cell-content">
+                        {{ number }}
+                    </div>
+                </td>
+                <td class="table-cell">
+                    <div *ngFor="let mail of supplier.mail" class="table-cell-content">
+                        {{ mail }}
+                    </div>
+                </td>
+                <td class="table-cell">{{ supplier.details }}</td>
+                <td class="table-cell"><a href="{{ supplier.web_page }}">{{ supplier.web_page }}</a></td>
+                <td class="table-cell">{{ supplier.ranking_details }}</td>
+                <td class="table-cell">
+                    <div *ngFor="let project of supplier.projects" class="table-cell-content">
+                        {{ project }}
+                    </div>
+                </td>
+                <td class="table-cell">{{ supplier.address }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

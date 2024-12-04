@@ -30,6 +30,7 @@ import { Subcategories } from '../model/subcategories';
 import { Bom } from '../model/bom';
 import { Bomcomponent } from '../model/bomcomponent';
 import { Variant } from '../model/variant';
+import { Supplier } from '../model/supplier';
 
 
 
@@ -765,6 +766,10 @@ export class DefaultService {
 
     public getVariantsForSpecificBOM(bomId: string):Observable<Variant[]>{
         return this.httpClient.get<Variant[]>(`${this.configuration.basePath}/Variant/GetVariantsForSpecificBOM?bomId=${bomId}`,{})
+    }
+
+    public getSuppliers():Observable<Supplier[]>{
+        return this.httpClient.get<Supplier[]>(`${this.configuration.basePath}/Supplier/GetAllSuppliers`)
     }
 
     /**

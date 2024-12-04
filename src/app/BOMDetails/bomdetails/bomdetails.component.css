@@ -156,24 +156,24 @@ h2 {
     color: #f5f5f5;
 }
 
-/* Components Section */
-.component-table-container {
-    overflow-x: auto; /* Permite scroll-ul orizontal */
-    max-width: 100%; /* Se ajustează la dimensiunea paginii */
-    border-radius: 10px; /* Colțuri rotunjite */
+
+/* .component-table-container {
+    overflow-x: auto; 
+    max-width: 100%; 
+    border-radius: 10px; 
     margin-bottom: 20px;
-    background-color: #555; /* Fundal gri */
+    background-color: #555;
 }
 
 .component-table {
     display: grid;
-    grid-auto-flow: row; /* Menține rândurile unul sub altul */
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Ajustare automată */
+    grid-auto-flow: row; 
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
     gap: 10px;
-    min-width: 1000px; /* Dimensiune minimă pentru a asigura scroll-ul */
+    min-width: 1000px; 
     background-color: #555;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Umbră pentru efect vizual */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .table-header {
@@ -195,18 +195,99 @@ h2 {
 
 .table-row:last-child {
     border-bottom: none;
+} */
+
+.image-container {
+    position: relative; 
+    display: inline-block;
+    width: 100px; 
+  }
+  
+ 
+  .scaled-image {
+    width: 100%; 
+    height: auto;
+    transition: transform 0.3s ease; 
+  }
+  
+  
+  .hover-image {
+    display: none; 
+    position: absolute;
+    top: -150px; 
+    left: 120%; 
+    z-index: 100; 
+    background-color: white; 
+    padding: 5px;
+    border: 1px solid #ddd; 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
+  }
+  
+ 
+  .hover-image img {
+    width: 300px; 
+    height: auto;
+  }
+  
+ 
+  .image-container:hover .hover-image {
+    display: block; 
+  }
+  
+
+table {
+    width: 90%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #444;
+    
 }
 
-.scaled-image {
-    width: 60px;
-    height: 40px;
-    object-fit: contain;
-    border-radius: 5px;
+th, td {
+    border: 1px solid #7e7b7b;
+    text-align: center;
+    padding: 8px;
 }
 
-/* Make table wider on larger screens */
-@media (min-width: 1024px) {
-    .component-table {
-        width: 100%; /* Use full width on larger screens */
+th {
+
+    font-weight: 600;
+    background-color: orange;
+    text-align: center;
+    background-color: #7e7b7b;
+    padding: 15px 0;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #444;
+}
+
+
+
+@media (min-width: 1300px) {
+
+    table {
+        width: 100%;
     }
+    
+
+    main {
+        max-width: 1500px;     
+    }
+
+    .button-container { 
+        right: 230px; 
+    }
+
+
+
+    
+
+
+   
+    
+    
+    
 }

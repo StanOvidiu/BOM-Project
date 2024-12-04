@@ -1,0 +1,80 @@
+/* Container for the table */
+.table-container {
+    width: 100%;
+    margin: 20px auto;
+    overflow-x: auto;
+}
+
+/* General table styling */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+
+/* Header styling */
+.table-header {
+    background-color: #FFB600; /* Gold header background */
+    color: #fff; /* White text */
+    font-weight: bold;
+    text-align: left;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+/* Table cells */
+.table-cell {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    vertical-align: top;
+}
+
+/* Alternating row colors */
+.table-row:nth-child(even) {
+    background-color: #f9f9f9; /* Light gray for even rows */
+}
+
+.table-row:nth-child(odd) {
+    background-color: #fff; /* White for odd rows */
+}
+
+/* Div inside table cells */
+.table-cell-content {
+    margin-bottom: 5px;
+}
+
+/* Images in cells */
+img {
+    max-width: 50px; /* Adjust image size to fit cells */
+    height: auto;
+    display: block;
+    margin: auto;
+}
+
+/* Button styling */
+button {
+    background-color: #008CFF; /* Blue button background */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005BB5; /* Darker blue on hover */
+}
+
+.checkmark {
+    color: green;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.cross {
+    color: red;
+    font-weight: bold;
+    font-size: 16px;
+}

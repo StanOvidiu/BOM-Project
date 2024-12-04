@@ -75,47 +75,47 @@
             </div>
             <div class="components-section">
                 <h2>Components</h2>
-                <div class="component-table">
-                    <div class="table-header">
-                        <div>Image</div>
-                        <div>Component Name</div>
-                        <div>Quantity</div>
-                        <div>Supplier</div>
-                        <div>Choose Supplier</div>
-                    </div>
-                    <div *ngFor="let component of componentList; let i = index" class="table-row">
-                        <!-- <div><img [src]="'data:image/jpeg;base64,' + component.image" alt="Base64 Image" class="scaled-image"/></div> -->
-                        <div><img [src]="'data:image/jpeg;base64,' + component.image" alt="Base64 Image" class="scaled-image"/></div>
-                        <div>{{component.name}}</div>
-                        <input type="text" class="editable-sets" value="0" />
-                        <div>Selected Suppliers</div>
-                        <button class="save-button" (click)="openDialog(i,$event)">Save</button>
                 <div>
                     <button class="save-button" (click)="createVariant()">Create New Variant</button>
                     <input type="text" name="variant-name" id="variantName">
                 </div>
-                <div class="component-table-container">
-                    <div class="component-table">
-                        <div class="table-header">
-                            <div>Image</div>
-                            <div>Component Name</div>
-                            <div>Quantity</div>
-                            <div>Supplier</div>
-                            <div>Choose Supplier</div>
-                            <div *ngFor="let variant of variants">{{variant.name}}</div>
-                        </div>
-                        <div *ngFor="let component of bom.components; let i = index" class="table-row">
-                            <!-- <div><img [src]="'data:image/jpeg;base64,' + component.image" alt="Base64 Image" class="scaled-image"/></div> -->
-                            <div><img [src]="'data:image/jpeg;base64,' + component.image" alt="Base64 Image" class="scaled-image"/></div>
-                            <div>{{component.name}}</div>
-                            <input (input)="onTextChange($event,i)" type="number" class="editable-sets" value="{{component.quantity}}" />
-                            <div>{{component.selectedSupplier}}</div>
-                            <button class="save-button" (click)="openDialog(i,$event)">Save</button>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    <table class="component-table">
+                        <thead class="table-header">
+                            <tr>
+                                <th>Image</th>
+                                <th>Component Name</th>
+                                <th>Quantity</th>
+                                <th>Supplier</th>
+                                <th>Choose Supplier</th>
+                                <th *ngFor="let variant of variants">{{variant.name}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let component of bom.components; let i = index" class="table-row">
+                                <!-- <div><img [src]="'data:image/jpeg;base64,' + component.image" alt="Base64 Image" class="scaled-image"/></div> -->
+                                <td>
+                                    <div class="image-container">             
+                                      <img [src]="'data:image/jpeg;base64,' + component.image" 
+                                           alt="Base64 Image" 
+                                           class="scaled-image" />
+                                      <div class="hover-image">
+                                        <img [src]="'data:image/jpeg;base64,' + component.image" 
+                                             alt="Base64 Hover Image" />
+                                      </div>
+                                    </div>
+                                  </td>
+                                  
+                                <td>{{component.name}}</td>
+                                <td><input (input)="onTextChange($event,i)" type="number" class="editable-sets" value="{{component.quantity}}" /> </td>
+                                <td>{{component.selectedSupplier}}</td>
+                                <td><button class="save-button" (click)="openDialog(i,$event)">Choose</button></td>
+                                <td *ngFor="let variant of variants">
+                                    <input (input)="onVariantTextChange($event,i, variant)" type="number" class="editable-sets" value="{{variant.components[i].quantity}}" />
+                                </td>    
+                            </tr>
+                        </tbody>
+                    </table>       
+            </div>     
         </div>
     </main>
 </body>

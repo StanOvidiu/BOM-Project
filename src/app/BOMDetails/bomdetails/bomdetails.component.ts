@@ -107,4 +107,21 @@ export class BomdetailsComponent {
     window.location.reload();
   }
 
+  saveBOM() {
+    if (!this.bom._id) {
+      console.error("BOM ID is not defined!");
+      return;
+    }
+ 
+    this.service.updateBOM(this.bom._id, this.bom).subscribe({
+      next: (response) => {
+        console.log("BOM updated successfully:", response);
+        this.isEditing = false; // Exit edit mode
+      },
+      error: (err) => {
+        console.error("Error updating BOM:", err);
+      },
+    });
+  }
+
 }

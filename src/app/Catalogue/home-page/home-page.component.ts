@@ -36,7 +36,7 @@ export class HomePageComponent {
             console.error('Error fetching categories:', error);
         }
     );
-}
+  }
 
 openAddCategoryDialog() {
   const dialogRef = this.dialog.open(CategoryPopUpComponent, {
@@ -51,6 +51,10 @@ openAddCategoryDialog() {
       });
     }
   });
+}
+
+redirectToSuppliersContact(){
+  this.router.navigate(['/Contact'])
 }
 
 
