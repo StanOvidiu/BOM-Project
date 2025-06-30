@@ -26,16 +26,6 @@ namespace WebApplication1.Models
         [JsonPropertyName("name")]
         public string name { get; set; }
 
-        // Size field
-        [BsonElement("size")]
-        [JsonPropertyName("size")]
-        public double? size { get; set; }
-
-        // Color field
-        [BsonElement("color")]
-        [JsonPropertyName("color")]
-        public string color { get; set; }
-
         // Producer list, assumed to be a complex type
         [BsonElement("producer")]
         [JsonPropertyName("producer")]
@@ -85,20 +75,6 @@ namespace WebApplication1.Models
         public BindingSocket WithName(string name)
         {
             this.name = name;
-            return this;
-        }
-
-        // Fluent method to set the size
-        public BindingSocket WithSize(double size)
-        {
-            this.size = size;
-            return this;
-        }
-
-        // Fluent method to set the color
-        public BindingSocket WithColor(string color)
-        {
-            this.color = color;
             return this;
         }
 
@@ -162,8 +138,6 @@ namespace WebApplication1.Models
             {
                 return this.image == other.image &&
                        this.name == other.name &&
-                       this.size == other.size &&
-                       this.color == other.color &&
                        this.producer == other.producer &&
                        this.mpn == other.mpn &&
                        this.priceMin == other.priceMin &&
@@ -177,7 +151,7 @@ namespace WebApplication1.Models
         // Overriding GetHashCode for hashing
         public override int GetHashCode()
         {
-            return HashCode.Combine(image, name, size, color, producer, mpn, HashCode.Combine(priceMin, details, project, stock));
+            return HashCode.Combine(image, name, producer, mpn, HashCode.Combine(priceMin, details, project, stock));
         }
 
         // Custom ToString method
@@ -186,8 +160,6 @@ namespace WebApplication1.Models
             return $"BindingSocket {{ " +
                    $"Image: {image}, " +
                    $"Name: {name}, " +
-                   $"Size: {size}, " +
-                   $"Color: {color}, " +
                    $"Producer: {producer}, " +
                    $"Mpn: {mpn}, " +
                    $"PriceMin: {priceMin}, " +

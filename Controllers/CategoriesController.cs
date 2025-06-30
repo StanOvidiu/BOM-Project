@@ -42,8 +42,8 @@ namespace WebApplication1.Controllers
         public async Task<ActionResult<Categories>> GetCategoryById(string categoryId)
         {
             var filter = Builders<Categories>.Filter.Eq("_id", categoryId);
-            var bom = await _categoriesCollection.Find(filter).FirstOrDefaultAsync();
-            return Ok(bom);
+            Categories category = await _categoriesCollection.Find(filter).FirstOrDefaultAsync();
+            return Ok(category);
         }
 
 

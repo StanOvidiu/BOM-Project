@@ -19,13 +19,11 @@ namespace WebApplication1.Controllers
     {
         private readonly IMongoCollection<BindingSocket> _bindingSocketsCollection;
         private readonly IMongoCollection<BOM> _bomCollection;
-        private readonly IMongoCollection<Variant> _variantCollection;
 
         public BindingsocketsController(IMongoDatabase database)
         {
             _bindingSocketsCollection = database.GetCollection<BindingSocket>("bindingSocket");
             _bomCollection = database.GetCollection<BOM>("BOMS");
-            _variantCollection = database.GetCollection<Variant>("variants");
         }
 
         [HttpPost]
@@ -47,24 +45,29 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public async Task<ActionResult<List<BindingSocket>>> GetBindingSocketsForSearch([FromQuery] string text, [FromQuery] string subcategory)
         {
+            var filter = Builders<BindingSocket>.Filter.Empty;
+
             if (!string.IsNullOrEmpty(text))
             {
-                var filter = Builders<BindingSocket>.Filter.Or(
-                        Builders<BindingSocket>.Filter.Regex(bs => bs.name, new BsonRegularExpression(text, "i")),
-                        Builders<BindingSocket>.Filter.Regex(bs => bs.size, new BsonRegularExpression(text, "i")),
-                        Builders<BindingSocket>.Filter.Regex(bs => bs.color, new BsonRegularExpression(text, "i")),
-                        Builders<BindingSocket>.Filter.Regex(bs => bs.mpn, new BsonRegularExpression(text, "i")),
-                        Builders<BindingSocket>.Filter.Regex(bs => bs.details, new BsonRegularExpression(text, "i"))
+                var textFilter = Builders<BindingSocket>.Filter.Or(
+                    Builders<BindingSocket>.Filter.Regex(bs => bs.name, new BsonRegularExpression(text, "i")),
+                    Builders<BindingSocket>.Filter.Regex(bs => bs.mpn, new BsonRegularExpression(text, "i")),
+                    Builders<BindingSocket>.Filter.Regex(bs => bs.details, new BsonRegularExpression(text, "i"))
                 );
 
-                var result = await _bindingSocketsCollection.Find(filter).ToListAsync();
-                return Ok(result);
+                var subcategoryFilter = Builders<BindingSocket>.Filter.Eq("subcategory", subcategory);
+
+                // Combine both filters with AND so that the regex search applies only within the given subcategory
+                filter = Builders<BindingSocket>.Filter.And(subcategoryFilter, textFilter);
             }
             else
             {
-                var allSockets = await _bindingSocketsCollection.Find(_ => true).ToListAsync();
-                return Ok(allSockets);
+                // If there's no text, just filter by subcategory
+                filter = Builders<BindingSocket>.Filter.Eq("subcategory", subcategory);
             }
+
+            var result = await _bindingSocketsCollection.Find(filter).ToListAsync();
+            return Ok(result);
         }
 
         [HttpGet]
@@ -93,8 +96,6 @@ namespace WebApplication1.Controllers
             if (existingBindingSocket != null)
             {
                 existingBindingSocket.name = updatedBindingSocket.name;
-                existingBindingSocket.size = updatedBindingSocket.size;
-                existingBindingSocket.color = updatedBindingSocket.color;
                 existingBindingSocket.mpn = updatedBindingSocket.mpn;
                 existingBindingSocket.priceMin = updatedBindingSocket.priceMin;
                 existingBindingSocket.details = updatedBindingSocket.details;
@@ -139,8 +140,6 @@ namespace WebApplication1.Controllers
 
                     await _bomCollection.ReplaceOneAsync(filter, bom);
 
-                    await AddComponentToVariants(bom, socket);
-
                     return Ok();
                 }
             } catch(Exception e)
@@ -148,22 +147,6 @@ namespace WebApplication1.Controllers
 
             }
             return NotFound();
-        }
-
-        [NonAction]
-        public async Task AddComponentToVariants(BOM bom, BindingSocket socket)
-        {
-            var filter = Builders<Variant>.Filter.Eq("parent_id", bom._id);
-
-            VariantComponent component = new VariantComponent
-            {
-                componentId = socket._id,
-                quantity = 0
-            };
-
-            var update = Builders<Variant>.Update.AddToSet("components", component);
-
-            await _variantCollection.UpdateManyAsync(filter, update);
         }
 
         public IActionResult Index()

@@ -8,6 +8,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApplication1.Models;
 using System.Text.Json;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
 
 namespace WebApplication1.Controllers
 {
@@ -19,13 +22,11 @@ namespace WebApplication1.Controllers
     {
         private readonly IMongoCollection<BOM> _bomCollection;
         private readonly IMongoCollection<BindingSocket> _bindingSocketCollection;
-        private readonly IMongoCollection<Variant> _variantCollection;
 
         public BomController(IMongoDatabase database)
         {
             _bomCollection = database.GetCollection<BOM>("BOMS");
             _bindingSocketCollection = database.GetCollection<BindingSocket>("bindingSocket");
-            _variantCollection = database.GetCollection<Variant>("variants");
         }
 
         [HttpGet]
@@ -167,28 +168,62 @@ namespace WebApplication1.Controllers
             return Ok();
         }
 
-        [HttpPost]
-        public async Task<ActionResult> CreateVariant([FromQuery] string bomId, [FromQuery] string variantName)
+        [HttpGet("{bomId}")]
+        public async Task<ActionResult> DownloadReport(string bomId)
         {
             var filter = Builders<BOM>.Filter.Eq("_id", bomId);
             var bom = _bomCollection.Find(filter).FirstOrDefault();
 
-            var variant = new Variant()
+            using (MemoryStream stream = new MemoryStream())
             {
-                name = variantName,
-                parent_id = bomId
-            };
+                Document document = new Document();
+                PdfWriter writer = PdfWriter.GetInstance(document, stream);
+                document.Open();
 
-            foreach(var component in bom.components)
-            {
-                var variantComponent = new VariantComponent();
-                variantComponent.componentId = component.componentId;
-                variantComponent.quantity = 0;
-                variant.components.Add(variantComponent);
+                Font titleFont = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16);
+
+                document.Add(new Paragraph($"Bill Of Materials for {bom.project_name}", titleFont));
+                document.Add(new Paragraph($"Equipment Name: {bom.equipment_name}", FontFactory.GetFont(FontFactory.HELVETICA_BOLD,12)));
+                document.Add(new Paragraph($"Project DS: {bom.project_ds}", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12)));
+                document.Add(new Paragraph($"Project DG: {bom.project_dg}", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12)));
+                document.Add(new Paragraph("\n"));
+
+                PdfPTable table = new PdfPTable(3);
+                table.AddCell("Component Name");
+                table.AddCell("Supplier");
+                table.AddCell("Quantity");
+
+                foreach (var component in bom.components)
+                {
+                    table.AddCell(component.name);
+                    table.AddCell(component.selectedSupplier ?? "N/A");
+                    table.AddCell(component.quantity.ToString());
+                }
+
+                document.Add(table);
+                document.Close();
+
+                return File(stream.ToArray(), "application/pdf", $"BOM_Report_{bom.project_name}.pdf");
             }
+        }
 
-            await _variantCollection.InsertOneAsync(variant);
+        [HttpPost]
+        public async Task<ActionResult> CreateBOM([FromQuery] string name)
+        {
+            BOM bom = new BOM();
 
+            bom.project_name = name;
+
+            await _bomCollection.InsertOneAsync(bom);
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> DeleteBOM([FromQuery] string bomId)
+        {
+            var filter = Builders<BOM>.Filter.Eq("_id", bomId);
+            await _bomCollection.DeleteOneAsync(filter);
             return Ok();
         }
 
