@@ -12,13 +12,13 @@ import { EditCategoryPopUpComponent } from '../../edit-category-pop-up/edit-cate
 
 
 @Component({
-  selector: 'app-home-page',
+  selector: 'app-categories',
   standalone: true,
   imports: [CommonModule, MatDialogModule, FormsModule],
-  templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.css'
+  templateUrl: './categories.component.html',
+  styleUrl: './categories.component.css'
 })
-export class HomePageComponent {
+export class CategoriesComponent {
 
   imagePath:string = 'assets/PngItem_411992.png'
 
@@ -38,9 +38,9 @@ export class HomePageComponent {
     );
   }
 
-openAddCategoryDialog() {
-  const dialogRef = this.dialog.open(CategoryPopUpComponent, {
-    width: '400px'
+  openAddCategoryDialog() {
+    const dialogRef = this.dialog.open(CategoryPopUpComponent, {
+      width: '400px'
   });
 
   dialogRef.afterClosed().subscribe(result => {

@@ -9,6 +9,7 @@
 <body>
     <main>
         <h1>BOMS List</h1>
+        <button class="add-button" (click)="openAddBOMDialog()">Create BOM</button>
         <div class="catalogue">
             <!-- Loop through listOfBoms to display each BOM -->
             <div *ngFor="let bom of listOfBoms; let i = index" class="catalogue-item" (click)="redirectToBomDetails(i)">

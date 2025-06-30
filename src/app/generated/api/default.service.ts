@@ -29,7 +29,6 @@ import { tick } from '@angular/core/testing';
 import { Subcategories } from '../model/subcategories';
 import { Bom } from '../model/bom';
 import { Bomcomponent } from '../model/bomcomponent';
-import { Variant } from '../model/variant';
 import { Supplier } from '../model/supplier';
 
 
@@ -368,56 +367,9 @@ export class DefaultService {
         // );
     }
 
-    // public getBindingSockets(subcategory:string){
-    //     let params = new HttpParams().set('subcategory', subcategory);
-    //     return this.httpClient.get<BindingSocket[]>(`${this.configuration.basePath}/Bindingsockets/GetBindingSockets`, { params });
-    // }
-
-
-    /*
-    Get Filtered BindingSockets
-    */
-    public getBindingSocketsForSearch(text: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<BindingSocket[]> {
-
-        let localVarHeaders = new HttpHeaders().set('Accept','application/json');
-
-        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-        if (localVarHttpHeaderAcceptSelected === undefined) {
-            // to determine the Accept header
-            const httpHeaderAccepts: string[] = [
-                'application/json'
-            ];
-            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        }
-        if (localVarHttpHeaderAcceptSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
-        }
-
-        let localVarHttpContext: HttpContext | undefined = options && options.context;
-        if (localVarHttpContext === undefined) {
-            localVarHttpContext = new HttpContext();
-        }
-
-        let localVarTransferCache: boolean | undefined = options && options.transferCache;
-        if (localVarTransferCache === undefined) {
-            localVarTransferCache = true;
-        }
-
-
-        let responseType_: 'text' | 'json' | 'blob' = 'json';
-        if (localVarHttpHeaderAcceptSelected) {
-            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
-                responseType_ = 'text';
-            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
-                responseType_ = 'json';
-            } else {
-                responseType_ = 'blob';
-            }
-        }
-
-        let params = new HttpParams().set('text', text);
-        return this.httpClient.get<BindingSocket[]>(`${this.configuration.basePath}/Bindingsockets/GetBindingSocketsForSearch`, { params });
-      }
+    public getBindingSocketsForSearch(searchTerm: string, subcategory: string): Observable<BindingSocket[]>{
+        return this.httpClient.get<BindingSocket[]>(`${this.configuration.basePath}/Bindingsockets/GetBindingSocketsForSearch?text=${searchTerm}&subcategory=${subcategory}`,{})
+    }
 
     public getCategories(): Observable<Categories[]>{
         return this.httpClient.get<Categories[]>(`${this.configuration.basePath}/Categories/GetCategories`);
@@ -724,6 +676,14 @@ export class DefaultService {
         return this.httpClient.get<Categories>(`${this.configuration.basePath}/Categories/GetCategoryById/${categoryId}`, {});
     }
 
+    public createBOM(name: string):Observable<string>{
+        return this.httpClient.post<string>(`${this.configuration.basePath}/BOM/CreateBOM?name=${name}`,{})
+    }
+
+    public deleteBOM(bomId: string):Observable<string>{
+        return this.httpClient.delete<string>(`${this.configuration.basePath}/BOM/DeleteBOM?bomId=${bomId}`, {})
+    }
+
     public addBOM(socketID: string): Observable<string>{
         return this.httpClient.post<string>(`${this.configuration.basePath}/Bindingsockets/AddBOM/${socketID}`,{});
     }
@@ -756,20 +716,13 @@ export class DefaultService {
         return this.httpClient.post<number>(`${this.configuration.basePath}/Bom/SetQuantityToBOMProduct?productId=${productId}&bomId=${bomId}&quantity=${quantity}`,{})
     }
 
-    public setVariantQuantity(variantId: string | undefined, componentId: string | undefined, quantity: number):Observable<number>{
-        return this.httpClient.post<number>(`${this.configuration.basePath}/Variant/SetQuantityToVariantProduct?variantId=${variantId}&componentId=${componentId}&quantity=${quantity}`,{})
-    }
-    
-    public createVariant(bomId: string, variantName : string):Observable<string>{
-        return this.httpClient.post<string>(`${this.configuration.basePath}/Bom/CreateVariant?bomId=${bomId}&variantName=${variantName}`,{})
-    }
-
-    public getVariantsForSpecificBOM(bomId: string):Observable<Variant[]>{
-        return this.httpClient.get<Variant[]>(`${this.configuration.basePath}/Variant/GetVariantsForSpecificBOM?bomId=${bomId}`,{})
-    }
-
     public getSuppliers():Observable<Supplier[]>{
         return this.httpClient.get<Supplier[]>(`${this.configuration.basePath}/Supplier/GetAllSuppliers`)
+    }
+
+    public downloadReport(bomId: string):Observable<Blob>{
+        let responseType_ = 'blob';
+        return this.httpClient.get<Blob>(`${this.configuration.basePath}/Bom/DownloadReport/${bomId}`,{responseType: <any>responseType_})
     }
 
     /**

@@ -1,0 +1,41 @@
+<div class="overlay">
+    <div class="login-box">
+        <h2>Project Name</h2>
+        <form #categoryForm="ngForm" (ngSubmit)="saveBOM()">
+            <div class="user-box">
+                <label for="name">Name</label>
+                <input
+                    type="text"
+                    id="name"
+                    [(ngModel)]="name"
+                    name="name"
+                    required
+                />
+            </div>
+            <!-- <div>
+                <strong>Subcategories:</strong>
+                <ul>
+                    <li *ngFor="let sub of category.subcategories">
+                        {{ sub.name }}
+                    </li>
+                </ul>
+            </div> -->
+            <div class="btn-group">
+                <button
+                    type="submit"
+                    class="add-button"
+                    [disabled]="!categoryForm.valid"
+                >
+                    Add
+                </button>
+                <button
+                    type="button"
+                    class="cancel-button"
+                    (click)="onCancel()"
+                >
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

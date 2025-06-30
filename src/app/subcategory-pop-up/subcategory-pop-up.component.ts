@@ -45,8 +45,8 @@ export class SubcategoryPopUpComponent {
   }
 
   saveSubcategory() {
-    if (!this.newSubcategory.name || !this.newSubcategory.image) {
-      console.error('Subcategory name or image is missing!');
+    if (!this.newSubcategory.name) {
+      console.error('Subcategory name is missing!');
       return;
     }
   

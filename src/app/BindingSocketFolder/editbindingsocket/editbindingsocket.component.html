@@ -1,64 +1,72 @@
-<div *ngIf="bindingsocket">
-    <h2>Edit Binding Socket</h2>
-    <form>
-        <div class="form-group">
-            <label for="image">Image</label>
-            <img [src]="'data:image/jpeg;base64,' + bindingsocket.image" alt="Base64 Image" class="binding-image"/>
-            <input type="file" id="image" (change)="onImageChange($event)" class="form-control"/>
-        </div>
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" value={{bindingsocket.name}} name="name" class="form-control"/>
-        </div>
-        <div class="form-group">
-            <label for="size">Size</label>
-            <input type="text" id="size" value={{bindingsocket.size}} name="size" class="form-control"/>
-        </div>
-        <div class="form-group">
-            <label for="color">Color</label>
-            <input type="text" id="color" value={{bindingsocket.color}} name="color" class="form-control"/>
-        </div>
-        <div class="form-group">
-            <label for="mpn">MPN</label>
-            <input type="text" id="mpn" value={{bindingsocket.mpn}} name="mpn" class="form-control"/>
-        </div>
-        <!-- <div class="form-group">
-            <label for="pricemin">Price Min</label>
-            <input type="number" id="pricemin" value={{bindingsocket.pricemin}} name="pricemin" class="form-control"/>
-        </div> -->
-        <div class="form-group">
-            <label for="details">Details</label>
-            <textarea rows="4" cols="50" id="details" name="details" class="form-control">{{bindingsocket.details}}</textarea>
-        </div>
-        <div class="form-group">
-            <label for="project">Project</label>
-            <input type="text" id="project" value={{bindingsocket.project}} name="project" class="form-control"/>
-        </div>
-        <div class="form-group">
-            <label for="stock">Stock</label>
-            <input type="number" id="stock" value={{bindingsocket.stock}} name="stock" class="form-control"/>
-        </div>
-        <h2>Producers</h2>
-        <button type="button" class="btn btn-primary" (click)="addProducer()">Add Producer</button>
-        <div *ngFor="let producer of bindingsocket.producer; let i = index">
+<div class="page-wrapper">
+    <div *ngIf="bindingsocket" class="form-container">
+        <h2>Edit Product</h2>
+        <form>
             <div class="form-group">
-                <label for="name{{i}}">Producer Name</label>
-                <input type="text" id="name{{i}}" [value]="producer?.name" name="name{{i}}" class="form-control"/>
-              </div>
-              <!-- <div class="form-group">
-                <label for="productCode{{i}}">Product Code</label>
-                <input type="text" id="productCode{{i}}" value={{bindingsocket.producer[i].productCode}} name="productCode{{i}}" class="form-control"/>
-              </div> -->
-              <div class="form-group">
-                <label for="quantity{{i}}">Quantity</label>
-                <input type="number" id="quantity{{i}}" [value]="producer?.quantity" name="quantity{{i}}" class="form-control"/>
-              </div>
-              <div class="form-group">
-                <label for="price{{i}}">Price</label>
-                <input type="number" id="price{{i}}" [value]="producer?.price" name="price{{i}}" class="form-control"/>
-              </div>
-        </div>
-        <button type="button" class="btn btn-primary" (click)="saveBindingSocket()">Save</button>
-        <button type="button" class="btn btn-secondary" (click)="goBack()">Cancel</button>
-    </form>
+                <label for="image">Image</label>
+                <img [src]="'data:image/jpeg;base64,' + bindingsocket.image" alt="Base64 Image" class="binding-image"/>
+                <input type="file" id="image" (change)="onImageChange($event)" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" value={{bindingsocket.name}} name="name" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="mpn">MPN</label>
+                <input type="text" id="mpn" value={{bindingsocket.mpn}} name="mpn" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="details">Details</label>
+                <textarea rows="4" cols="50" id="details" name="details" class="form-control">{{bindingsocket.details}}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="project">Project</label>
+                <input type="text" id="project" value={{bindingsocket.project}} name="project" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="stock">Stock</label>
+                <input type="number" id="stock" value={{bindingsocket.stock}} name="stock" class="form-control"/>
+            </div>
+            <h2>Producers</h2>
+            <button type="button" class="btn btn-primary" (click)="addProducer()">Add Producer</button>
+            <div *ngIf="bindingsocket?.producer as prods">
+                <div *ngFor="let producer of prods; let i = index">
+                    <div class="form-group">
+                      <label for="name{{i}}">Producer Name</label>
+                      <input
+                        type="text"
+                        id="name{{i}}"
+                        name="producerName{{i}}"
+                        class="form-control"
+                        [(ngModel)]="producer.name"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="quantity{{i}}">Quantity</label>
+                      <input
+                        type="number"
+                        id="quantity{{i}}"
+                        name="producerQty{{i}}"
+                        class="form-control"
+                        [(ngModel)]="producer.quantity"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="price{{i}}">Price</label>
+                      <input
+                        type="number"
+                        id="price{{i}}"
+                        name="producerPrice{{i}}"
+                        class="form-control"
+                        [(ngModel)]="producer.price"
+                      />
+                    </div>
+                  </div>
+            </div>
+            <div class="form-buttons">
+                <button type="button" class="btn btn-primary" (click)="saveBindingSocket()">Save</button>
+                <button type="button" class="btn btn-secondary" (click)="goBack()">Cancel</button>
+            </div>
+        </form>
+    </div>
 </div>

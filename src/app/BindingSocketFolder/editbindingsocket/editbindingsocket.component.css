@@ -1,38 +1,113 @@
-.form-group {
-    margin-bottom: 15px;
-}
-
-label {
+/* Wrapper to center everything */
+.page-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f7fb; /* Light background */
+    padding: 1rem;
+  }
+  
+  .form-container {
+    max-width: 600px;
+    width: 100%;
+    padding: 2rem 2.5rem;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eaeaea;
+  }
+  
+  /* Headings */
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+    color: #333;
+  }
+  
+  /* Form group styling */
+  .form-group {
+    margin-bottom: 1.2rem;
+  }
+  
+  label {
     display: block;
     font-weight: bold;
-    margin-bottom: 5px;
-}
-
-input, textarea {
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  input,
+  textarea {
     width: 100%;
-    padding: 10px;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
     box-sizing: border-box;
-}
-
-.binding-image {
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  input:focus,
+  textarea:focus {
+    border-color: #2f80ed;
+    box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.15);
+    outline: none;
+  }
+  
+  /* Image styling */
+  .binding-image {
     display: block;
-    margin-bottom: 10px;
-    max-width: 100px;
+    margin-bottom: 1rem;
+    max-width: 120px;
     height: auto;
-}
-
-button {
-    margin-right: 10px;
-}
-
-.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  }
+  
+  /* Button styling */
+  button {
+    margin-top: 0.8rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .btn-primary {
+    background-color: #2f80ed;
+    border: none;
     color: white;
-}
-
-.btn-secondary {
+  }
+  
+  .btn-primary:hover {
+    background-color: #1366d6;
+    box-shadow: 0 4px 10px rgba(47, 128, 237, 0.2);
+  }
+  
+  .btn-secondary {
     background-color: #6c757d;
-    border-color: #6c757d;
+    border: none;
     color: white;
-}
+  }
+  
+  .btn-secondary:hover {
+    background-color: #5a6268;
+    box-shadow: 0 4px 10px rgba(108, 117, 125, 0.2);
+  }
+  
+  /* Form buttons alignment */
+  .form-buttons {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* Spacing between producers */
+  div[ngfor] {
+    padding: 1rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 1.2rem;
+  }
+  

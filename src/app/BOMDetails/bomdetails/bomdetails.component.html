@@ -8,15 +8,19 @@
 </head>
 <body aria-hidden="false">
     <main>
-        <h1 style="display: flex; justify-content: space-between; align-items: center;">
-            BOM Details
-            <div class="button-container">
-                <button (click)="toggleEdit()" class="edit-button">
-                    {{ isEditing ? 'Cancel' : 'Edit' }}
-                </button>
-                <button (click)="saveBOM()" class="save-button">Save</button>
+        <div class="header-row">
+            <h1>BOM Details</h1>
+            <div class="button-bar">
+                <button (click)="deleteBOM()" class="delete-button">Delete BOM</button>
+                <div class="button-container">
+                    <button (click)="toggleEdit()" class="edit-button">
+                        {{ isEditing ? 'Cancel' : 'Edit' }}
+                    </button>
+                    <button (click)="saveBOM()" class="save-button">Save</button>
+                    <button (click)="downloadReport()" class="save-button">Download Report</button>
+                </div>
             </div>
-        </h1>
+        </div>
         <div class="bom-details">
             <!-- BOM Details Section -->
             <div class="bom-section">
@@ -75,10 +79,6 @@
             </div>
             <div class="components-section">
                 <h2>Components</h2>
-                <div>
-                    <button class="save-button" (click)="createVariant()">Create New Variant</button>
-                    <input type="text" name="variant-name" id="variantName">
-                </div>
                     <table class="component-table">
                         <thead class="table-header">
                             <tr>
@@ -87,12 +87,10 @@
                                 <th>Quantity</th>
                                 <th>Supplier</th>
                                 <th>Choose Supplier</th>
-                                <th *ngFor="let variant of variants">{{variant.name}}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let component of bom.components; let i = index" class="table-row">
-                                <!-- <div><img [src]="'data:image/jpeg;base64,' + component.image" alt="Base64 Image" class="scaled-image"/></div> -->
                                 <td>
                                     <div class="image-container">             
                                       <img [src]="'data:image/jpeg;base64,' + component.image" 
@@ -104,14 +102,10 @@
                                       </div>
                                     </div>
                                   </td>
-                                  
                                 <td>{{component.name}}</td>
                                 <td><input (input)="onTextChange($event,i)" type="number" class="editable-sets" value="{{component.quantity}}" /> </td>
                                 <td>{{component.selectedSupplier}}</td>
-                                <td><button class="save-button" (click)="openDialog(i,$event)">Choose</button></td>
-                                <td *ngFor="let variant of variants">
-                                    <input (input)="onVariantTextChange($event,i, variant)" type="number" class="editable-sets" value="{{variant.components[i].quantity}}" />
-                                </td>    
+                                <td><button class="save-button" (click)="openDialog(i,$event)">Choose</button></td>  
                             </tr>
                         </tbody>
                     </table>       

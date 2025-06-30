@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BindingSocket, BindingSocketProducerInner, DefaultService } from '../../generated';
 import { BindingSocketServiceService } from '../../binding-socket-service.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-editbindingsocket',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './editbindingsocket.component.html',
   styleUrl: './editbindingsocket.component.css'
 })
@@ -33,57 +34,33 @@ export class EditbindingsocketComponent {
   }
 
   goBack(){
-    this.router.navigate(['/']);
+    this.router.navigate(['bindingSocket']);
   }
 
   saveBindingSocket() {
-    const name = (document.getElementById('name') as HTMLInputElement).value;
-    const size = parseFloat((document.getElementById('size') as HTMLInputElement).value);
-    const color = (document.getElementById('color') as HTMLInputElement).value;
-    const mpn = (document.getElementById('mpn') as HTMLInputElement).value;
-    const details = (document.getElementById('details') as HTMLInputElement).value;
-    const project = (document.getElementById('project') as HTMLInputElement).value;
-    const stock = parseFloat((document.getElementById('stock') as HTMLInputElement).value);
-    
-    if(this.bindingsocket){
-      this.picture = this.picture ?? this.bindingsocket.image;
-      this.producersList = this.bindingsocket.producer?.map((producer: BindingSocketProducerInner, index: number) => {
-        const productname = (document.getElementById(`name${index}`) as HTMLInputElement).value;
-        //const productCode = (document.getElementById(`productCode${index}`) as HTMLInputElement).value;
-        const quantity = parseFloat((document.getElementById(`quantity${index}`) as HTMLInputElement).value);
-        const price = parseFloat((document.getElementById(`price${index}`) as HTMLInputElement).value);
-        //return { productname, productCode, quantity, price };
-        return { productname, quantity, price };
-    }) ?? [];
-    }
-    
-
-    const editBindingSocket:bindingSocketJson = {
-      _id: this.bindingsocket._id,
-      image: this.picture,
-      name,
-      size,
-      color,
-      mpn,
+    if (!this.bindingsocket) return;
+  
+    const editBindingSocket: bindingSocketJson = {
+      _id: this.bindingsocket._id!,
+      image: this.picture ?? this.bindingsocket.image!,
+      name: this.bindingsocket.name!,
+      mpn: this.bindingsocket.mpn!,
       pricemin: this.calculatePriceMin(),
-      details,
-      project,
-      stock,
-      producer: this.producersList
-    }
-
+      details: this.bindingsocket.details!,
+      project: this.bindingsocket.project!,
+      stock: this.bindingsocket.stock!,
+      producer: this.bindingsocket.producer!    // assert non-null
+    };
+  
     this.service.updateBindingSocket(this.bindingsocket._id, editBindingSocket)
-    .subscribe(
-      (response) => {
-        console.log('Binding Socket created successfully:', response);
-      },
-      (error) => {
-        console.error('Error creating Binding Socket:', error);
-      }
-    );
-
+      .subscribe(
+        response => console.log('Saved!', response),
+        err => console.error(err)
+      );
+  
     this.router.navigate(['/bindingSocket']);
   }
+  
 
   onImageChange(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
@@ -130,8 +107,6 @@ interface bindingSocketJson {
   _id: string,
   image: string,
   name: string,
-  size: number,
-  color: string,
   mpn: string,
   pricemin: number,
   details: string,

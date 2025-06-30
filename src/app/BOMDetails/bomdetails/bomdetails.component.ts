@@ -10,7 +10,6 @@ import { CommonModule } from '@angular/common';
 import { PopUpComponent } from '../../BindingSocketFolder/pop-up/pop-up.component';
 import { MatDialog } from '@angular/material/dialog';
 import { BOMPopUpComponent } from '../../bom-pop-up/bom-pop-up.component';
-import { Variant } from '../../generated/model/variant';
 
 @Component({
   selector: 'app-bomdetails',
@@ -29,7 +28,6 @@ export class BomdetailsComponent {
     ]
   };
 
-  public variants: Variant[] = [];
   public componentList: BindingSocket[] = [];
   public isEditing = false;
 
@@ -60,10 +58,6 @@ export class BomdetailsComponent {
       this.bom.components = data;
       console.log(data);
     });
-
-    this.service.getVariantsForSpecificBOM(this.bom._id).subscribe(data => {
-      this.variants = data;
-    })
   }
 
   openDialog(index: number, event: Event){
@@ -79,20 +73,8 @@ export class BomdetailsComponent {
     this.service.setQuantity(this.bom.components[index].componentId, this.bom._id, newQuantity).subscribe();
   }
 
-  onVariantTextChange(event: Event, index: number, variant: Variant){
-    const input = event.target as HTMLInputElement;
-    const newQuantity = Number(input.value);
-    console.log('Quantity updated:', newQuantity);
-    this.service.setVariantQuantity(variant._id, variant.components[index].componentId, newQuantity).subscribe();
-  }
-
   toggleEdit() {
     this.isEditing = !this.isEditing; // Toggle edit mode
-  }
-
-  createVariant(){
-    const name = (document.getElementById('variantName') as HTMLInputElement).value;
-    this.service.createVariant(this.bom._id, name).subscribe();
   }
 
   selectAsDefault(){
@@ -122,6 +104,27 @@ export class BomdetailsComponent {
         console.error("Error updating BOM:", err);
       },
     });
+  }
+
+  downloadReport(){
+    this.service.downloadReport(this.bom._id).subscribe((blob) => {
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'BOM_Report_'+this.bom.project_name+"_"+new Date().toLocaleDateString()+'.pdf';
+      link.click();
+    })
+  }
+
+  deleteBOM(){
+    const confirmDelete = window.confirm('Are you sure you want to delete this BOM?');
+    if(confirmDelete){
+      this.service.deleteBOM(this.bom._id).subscribe(
+        (response) => {
+          console.log('BOM deleted successfully:', response);
+        }
+      )
+      this.router.navigate(['boms']);
+    }
   }
 
 }

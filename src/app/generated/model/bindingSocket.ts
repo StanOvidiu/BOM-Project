@@ -19,11 +19,8 @@ export interface BindingSocket {
     _id?: any;
     image?: string;
     name?: string;
-    size?: number;
-    color?: string;
     producer?: Array<BindingSocketProducerInner>;
     mpn?: string;
-    pricemin?: number;
     details?: string;
     project?: string;
     stock?: number;

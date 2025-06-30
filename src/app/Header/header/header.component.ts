@@ -10,15 +10,15 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
 
-  imagePath:string = 'assets/PngItem_411992.png'
+  imagePath:string = 'assets/BOM.png'
 
   constructor(private router:Router){}
 
-  redirectToLogIn() {
-    this.router.navigate(['/login'])
+  redirectToSupplierContacts() {
+    this.router.navigate(['/Contact'])
   }
   redirectToHome() {
-    this.router.navigate([''])
+    this.router.navigate(['categories'])
   }
   redirectToBoms(){
     this.router.navigate(['boms'])
